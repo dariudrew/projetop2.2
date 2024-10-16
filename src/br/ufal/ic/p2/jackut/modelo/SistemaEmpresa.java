@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.lang.Math;
 
 public class SistemaEmpresa {
-    private int count = 0; //para teste, apagar depoiis
     private SistemaDados dados;
     private SistemaUsuario sistemaUsuario;
 
@@ -92,7 +91,6 @@ public class SistemaEmpresa {
         if(numeroFuncionarios < 1){
             throw new NumeroFuncionariosException();
         }
-        count = -1;
         verificaEmpresa(nomeFarmacia, dono, endereco);
     }
 

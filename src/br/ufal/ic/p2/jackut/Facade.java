@@ -43,16 +43,21 @@ public class Facade {
         sistemaUsuario.criarUsuario(nome, email, senha, endereco, cpf);
 
     }
+    public void criarUsuario(String nome, String email, String senha, String endereco, String veiculo, String placa)
+            throws EmailJaExisteException, NomeInvalidoException, EmailInvalidoException, FormatoPlacaException, EnderecoInvalidoException, SenhaInvalidaException, NomeVeiculoInvalidoException, PlacaInvalidoException {
+        sistemaUsuario.criarUsuario(nome, email, senha, endereco, veiculo, placa);
+    }
     public int login(String email, String senha) throws LoginSenhaException {
         return sistemaUsuario.login(email, senha);
     }
     public int criarEmpresa(String tipoEmpresa, int dono, String nome, String endereco, String tipoCozinha)
             throws EmpresaEnderecoInvalidoException, UsuarioNaoCriaEmpresaException, EmpresaNomeEnderecoEmUsoException,
-            EmpresaNomeInvalidoException, EmpresaTipoCozinhaInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeExisteException, TipoEmpresaInvalidoException, NomeInvalidoException {
+            EmpresaTipoCozinhaInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeExisteException, TipoEmpresaInvalidoException, NomeInvalidoException {
         return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nome, endereco, tipoCozinha);
     }
 
-    public int criarEmpresa(String tipoEmpresa, int dono, String nomeMercado, String endereco, String abre, String fecha, String tipoMercado) throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, EmpresaNomeInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException, FormatoHoraInvalidoException, HorarioInvalidoException, TipoEmpresaInvalidoException, NomeInvalidoException, TipoMercadoInvalidoException {
+    public int criarEmpresa(String tipoEmpresa, int dono, String nomeMercado, String endereco, String abre, String fecha, String tipoMercado)
+            throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, EmpresaNomeInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException, FormatoHoraInvalidoException, HorarioInvalidoException, TipoEmpresaInvalidoException, NomeInvalidoException, TipoMercadoInvalidoException {
         return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nomeMercado, endereco, abre, fecha,tipoMercado);
     }
     public int criarEmpresa(String tipoEmpresa, int dono, String nomeFarmacia, String endereco, boolean abre24Horas, int numeroFuncionarios) throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, UsuarioNaoCadastradoException, TipoEmpresaInvalidoException, NomeInvalidoException, HorarioInvalidoException, EmpresaNomeEnderecoEmUsoException, NumeroFuncionariosException, EmpresaNomeExisteException {

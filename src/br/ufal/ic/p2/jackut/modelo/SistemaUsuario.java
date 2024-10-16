@@ -5,6 +5,7 @@ import br.ufal.ic.p2.jackut.modelo.exception.*;
 
 import br.ufal.ic.p2.jackut.modelo.usuario.Cliente;
 import br.ufal.ic.p2.jackut.modelo.usuario.DonoEmpresa;
+import br.ufal.ic.p2.jackut.modelo.usuario.Entregador;
 import br.ufal.ic.p2.jackut.modelo.usuario.Usuario;
 
 
@@ -70,6 +71,22 @@ public class SistemaUsuario {
 
         dados.usuariosPorID.put(dados.contadorID, donoEmpresa);
         dados.contadorID+=1;
+    }
+    public void criarUsuario(String nome, String email, String senha, String endereco, String veiculo, String placa) throws EmailJaExisteException, NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, NomeVeiculoInvalidoException, PlacaInvalidoException, FormatoPlacaException {
+        validaDados(nome, email, senha, endereco);
+        if(validaNome(veiculo)){
+            throw new NomeVeiculoInvalidoException();
+        }
+        else if(validaNome(placa)){
+            throw new PlacaInvalidoException();
+        }
+        else if(!placa.matches("^BRA %d{4}$")){
+            System.out.println("placa: "+placa);
+            throw new FormatoPlacaException();
+        }
+        Entregador entregador = new Entregador(dados.contadorID, nome, email, senha, endereco, veiculo, placa);
+        dados.usuariosPorID.put(dados.contadorID, entregador);
+        dados.contadorID++;
     }
 
     public void validaDados(String nome, String email, String senha, String endereco)
