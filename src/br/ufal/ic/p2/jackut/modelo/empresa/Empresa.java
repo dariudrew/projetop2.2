@@ -18,11 +18,9 @@ public class Empresa {
     public int getIdEmpresa() {
         return idEmpresa;
     }
-
     public String getNomeEmpresa() {
         return nomeEmpresa;
     }
-
     public String getEnderecoEmpresa() {
         return enderecoEmpresa;
     }
@@ -44,11 +42,15 @@ public class Empresa {
     public String getTipoMercado(){
         return "";
     }
-
     public void setAbre(String abre) {
 
     }
-
     public void setFecha(String fecha) {
+    }
+    public boolean getAberto24Horas() {
+        return false;
+    }
+    public int getNumeroFuncionarios() {
+        return 0;
     }
 }

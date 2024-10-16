@@ -4,7 +4,7 @@ package br.ufal.ic.p2.jackut.modelo;
 import br.ufal.ic.p2.jackut.modelo.exception.*;
 
 import br.ufal.ic.p2.jackut.modelo.usuario.Cliente;
-import br.ufal.ic.p2.jackut.modelo.usuario.DonoRestaurante;
+import br.ufal.ic.p2.jackut.modelo.usuario.DonoEmpresa;
 import br.ufal.ic.p2.jackut.modelo.usuario.Usuario;
 
 
@@ -24,10 +24,10 @@ public class SistemaUsuario {
             dados.contadorID--;
             dados.contadorIdEmpresa--;
             dados.contadorIdProduto--;
+            dados.contadorIdPedido--;
 
             if(dados.contadorID > 0){
                 dados.usuariosPorID.remove(dados.contadorID);
-
             }
             if(dados.contadorIdEmpresa > 0){
                 dados.empresasPorID.remove(dados.contadorIdEmpresa);
@@ -35,12 +35,17 @@ public class SistemaUsuario {
             if(dados.contadorIdProduto > 0){
                 dados.produtosPorID.remove(dados.contadorIdProduto);
             }
+            if(dados.contadorIdPedido > 0){
+                dados.pedidosPorID.remove(dados.contadorIdPedido);
+            }
 
         }
 
         dados.contadorID = 1;
         dados.contadorIdEmpresa = 1;
         dados.contadorIdProduto = 1;
+        dados.contadorIdPedido = 1;
+
     }
 
     public void criarUsuario(String nome, String email, String senha, String endereco)
@@ -60,10 +65,10 @@ public class SistemaUsuario {
             throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, CPFInvalidoException {
         validaCPF(cpf);
         validaDados(nome, email, senha, endereco);
-        DonoRestaurante donoRestaurante = new DonoRestaurante(dados.contadorID, nome, email, senha, endereco, cpf);
-        //xml.inserirUsuario(donoRestaurante);
+        DonoEmpresa donoEmpresa = new DonoEmpresa(dados.contadorID, nome, email, senha, endereco, cpf);
+        //xml.inserirUsuario(donoEmpresa);
 
-        dados.usuariosPorID.put(dados.contadorID, donoRestaurante);
+        dados.usuariosPorID.put(dados.contadorID, donoEmpresa);
         dados.contadorID+=1;
     }
 
@@ -86,7 +91,6 @@ public class SistemaUsuario {
              throw new EmailJaExisteException();
         }
     }
-
 
     public void validaCPF(String cpf) throws CPFInvalidoException{
         if(cpf == null || cpf.isEmpty() || !cpf.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$")){

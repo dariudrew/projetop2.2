@@ -251,4 +251,4 @@ expect "05:25" getAtributoEmpresa empresa=${eid4} atributo="abre"
 expect "22:00" getAtributoEmpresa empresa=${eid4} atributo="fecha"
 
 encerrarSistema
-quit
+

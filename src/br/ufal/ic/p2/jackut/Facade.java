@@ -48,13 +48,15 @@ public class Facade {
     }
     public int criarEmpresa(String tipoEmpresa, int dono, String nome, String endereco, String tipoCozinha)
             throws EmpresaEnderecoInvalidoException, UsuarioNaoCriaEmpresaException, EmpresaNomeEnderecoEmUsoException,
-            EmpresaNomeInvalidoException, EmpresaTipoCozinhaInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeExisteException, TipoEmpresaInvalidoException {
-        //return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nome, endereco, tipoCozinha);
+            EmpresaNomeInvalidoException, EmpresaTipoCozinhaInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeExisteException, TipoEmpresaInvalidoException, NomeInvalidoException {
         return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nome, endereco, tipoCozinha);
     }
 
     public int criarEmpresa(String tipoEmpresa, int dono, String nomeMercado, String endereco, String abre, String fecha, String tipoMercado) throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, EmpresaNomeInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException, FormatoHoraInvalidoException, HorarioInvalidoException, TipoEmpresaInvalidoException, NomeInvalidoException, TipoMercadoInvalidoException {
         return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nomeMercado, endereco, abre, fecha,tipoMercado);
+    }
+    public int criarEmpresa(String tipoEmpresa, int dono, String nomeFarmacia, String endereco, boolean abre24Horas, int numeroFuncionarios) throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, UsuarioNaoCadastradoException, TipoEmpresaInvalidoException, NomeInvalidoException, HorarioInvalidoException, EmpresaNomeEnderecoEmUsoException, NumeroFuncionariosException, EmpresaNomeExisteException {
+        return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nomeFarmacia, endereco, abre24Horas,numeroFuncionarios);
     }
 
     public String getEmpresasDoUsuario(int idDono) throws UsuarioNaoCriaEmpresaException {

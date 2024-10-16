@@ -40,7 +40,7 @@ public class SistemaPedido {
         if(!dados.empresasPorID.containsKey(idEmpresa)){
             throw new EmpresaNaoCadastradaException();
         }
-        if(dados.usuariosPorID.get(idCliente).getTipoObjeto().matches("donoRestaurante")){
+        if(!dados.usuariosPorID.get(idCliente).getTipoObjeto().matches("cliente")){
             throw new DonoNaoFazPedidoException();
         }
 
