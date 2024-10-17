@@ -60,7 +60,7 @@ public class SistemaPedido {
 
         int qntPedidos = dados.pedidosPorID.size();
         int numeroPedido = 0;
-        int indiceProcurado = -1;                                 //iniciando a contagem padrao em 1 ao ives de 0 para reutilizar a variavel "indice" como contador e saber qual o pedido correto
+        int indiceProcurado = -1;  //iniciando a contagem padrao em 1 ao ives de 0 para reutilizar a variavel "indice" como contador e saber qual o pedido correto
 
         for(int i=1; i<= qntPedidos; i++){
             Pedido pedido = dados.pedidosPorID.get(i);
@@ -78,7 +78,7 @@ public class SistemaPedido {
             throw new PedidoNaoEncontradoException();
         }
 
-        return numeroPedido; //numero do pedido
+        return numeroPedido;
     }
 
     public void adicionarProduto(int numeroPedido, int idProduto)
@@ -90,8 +90,6 @@ public class SistemaPedido {
         else if(!dados.produtosPorID.containsKey(idProduto)){
             throw new ProdutoNaoEncontradoException();
         }
-
-
 
         Pedido pedido = dados.pedidosPorID.get(numeroPedido);
         Produto produto = dados.produtosPorID.get(idProduto);
@@ -141,12 +139,7 @@ public class SistemaPedido {
                 return String.format(Locale.US, "%.2f", pedido.getValorPedido());
             default:
                 throw new ProdutoAtributoNaoExisteException();
-
         }
-
-
-
-       // return str;
     }
 
     public void fecharPedido(int numeroPedido) throws PedidoNaoEncontradoException {

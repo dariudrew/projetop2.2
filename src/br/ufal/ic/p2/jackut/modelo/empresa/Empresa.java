@@ -6,6 +6,7 @@ public class Empresa {
     private int idDono;
     private String nomeEmpresa;
     private String enderecoEmpresa;
+    private String entregadoresVinculados = "{[]}";
 
 
     public Empresa(int id, int idDono, String nome, String endereco){
@@ -52,5 +53,11 @@ public class Empresa {
     }
     public int getNumeroFuncionarios() {
         return 0;
+    }
+    public String getEntregadoresVinculados(){
+        return entregadoresVinculados;
+    }
+    public void setEntregadoresVinculados(String emailEntregador){
+        this.entregadoresVinculados = emailEntregador;
     }
 }

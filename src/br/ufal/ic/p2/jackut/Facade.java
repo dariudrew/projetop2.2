@@ -75,19 +75,34 @@ public class Facade {
     public String getAtributoEmpresa(int empresa, String atributo) throws EmpresaNaoCadastradaException, AtributoInvalidoException {
         return sistemaEmpresa.getAtributoEmpresa(empresa, atributo);
     }
+
     public void alterarFuncionamento(int idEmpresa, String abre, String fecha) throws EmpresaNaoEncontradaException, HorarioInvalidoException, FormatoHoraInvalidoException, NaoMercadoValidoException {
        sistemaEmpresa.alterarFuncionamento(idEmpresa, abre, fecha);
+    }
+
+    public void cadastrarEntregador(int empresa, int entregador) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, EmpresaNaoEncontradaException {
+        sistemaUsuario.cadastrarEntregador(empresa, entregador);
+    }
+
+    public String getEntregadores(int empresa) throws EmpresaNaoEncontradaException {
+        return sistemaUsuario.getEntregadores(empresa);
+    }
+    public String getEmpresas(int entregador) throws EmpresaNaoCadastradaException, UsuarioNaoCadastradoException, UsuarioNaoEntregadorException {
+        return  sistemaUsuario.getEmpresas(entregador);
     }
 
     public int criarProduto(int idEmpresa, String nomeProduto, float valorProduto, String categoriaProduto) throws EmpresaNaoCadastradaException, NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoJaExisteNaEmpresaException {
         return sistemaProduto.criarProduto(idEmpresa, nomeProduto, valorProduto, categoriaProduto);
     }
+
     public void editarProduto(int idProduto, String nomeProduto, float valorProduto, String categoriaProduto) throws ProdutoNaoCadastradoException, NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException {
         sistemaProduto.editarProduto(idProduto, nomeProduto,valorProduto, categoriaProduto);
     }
+
     public String getProduto(String  nomeProduto, int idEmpresa, String atributo) throws EmpresaNaoCadastradaException, ProdutoAtributoNaoExisteException, NomeInvalidoException, ProdutoNaoEncontradoException {
         return sistemaProduto.getProduto(nomeProduto, idEmpresa, atributo);
     }
+
     public String listarProdutos(int idEmpresa) throws EmpresaNaoEncontradaException{
         return sistemaProduto.listarProdutos(idEmpresa);
     }

@@ -9,4 +9,15 @@ public class Entregador extends Usuario{
         this.veiculo = veiculo;
         this.placa = placa;
     }
+
+    @Override
+    public String getVeiculo() {
+        return veiculo;
+    }
+    public String getPlaca(){
+        return placa;
+    }
+    public String getTipoObjeto(){
+        return "entregador";
+    }
 }

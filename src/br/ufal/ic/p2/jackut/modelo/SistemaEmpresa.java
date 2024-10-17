@@ -93,10 +93,6 @@ public class SistemaEmpresa {
         }
         verificaEmpresa(nomeFarmacia, dono, endereco);
     }
-
-
-
-
     public String getEmpresasDoUsuario(int idDono) throws UsuarioNaoCriaEmpresaException {
         if(dados.usuariosPorID.get(idDono).getTipoObjeto().matches("cliente"))
         {
@@ -104,7 +100,7 @@ public class SistemaEmpresa {
         }
         String empresasPorDono = "";
         if(!dados.empresasPorID.isEmpty()){
-            int qntEmpresas = dados.empresasPorID.size(); // quantidade de empresas registradas
+            int qntEmpresas = dados.empresasPorID.size();
 
             for(int i = 1; i <= qntEmpresas; i++){
 
@@ -116,10 +112,10 @@ public class SistemaEmpresa {
                 if(empresa.getIdDono() == idDono ){
 
 
-                    if(empresasPorDono.matches("^\\{\\[\\[.*")){//veifica o inicio da string para saber quando add virgula e espaçamento entre as empresas.
+                    if(empresasPorDono.matches("^\\{\\[\\[.*")){
                         empresasPorDono = empresasPorDono.concat(", ");
                     }
-                    empresasPorDono =empresasPorDono.concat("[").concat(empresa.getNomeEmpresa()).concat(", ").concat(empresa.getEnderecoEmpresa()).concat("]");
+                    empresasPorDono = empresasPorDono.concat("["+empresa.getNomeEmpresa()+", "+empresa.getEnderecoEmpresa()+"]");
                 }
                 if(i == qntEmpresas){
                     empresasPorDono = empresasPorDono.concat("]}");
@@ -131,7 +127,6 @@ public class SistemaEmpresa {
         }
         return empresasPorDono;
     }
-
     public int getIdEmpresa(int idDono, String nome, int indice) throws UsuarioNaoCadastradoException, NomeInvalidoException, UsuarioNaoCriaEmpresaException, IndiceInvalidoException, NaoExisteEmpresaException, IndiceMaiorException {
         int idEmpresa = 0;
         if(!dados.usuariosPorID.containsKey(idDono)){
@@ -179,7 +174,6 @@ public class SistemaEmpresa {
 
         return idEmpresa;
     }
-
     public String getAtributoEmpresa(int idEmpresa, String atributo) throws EmpresaNaoCadastradaException, AtributoInvalidoException {
         if(dados.empresasPorID.containsKey(idEmpresa)) {
             if(sistemaUsuario.validaNome(atributo)) {
