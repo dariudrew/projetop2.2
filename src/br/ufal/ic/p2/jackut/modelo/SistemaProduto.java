@@ -47,7 +47,7 @@ public class SistemaProduto {
 
     }
     public String getProduto(String  nomeProduto, int idEmpresa, String atributo)
-            throws EmpresaNaoCadastradaException, NomeInvalidoException, ProdutoAtributoNaoExisteException, ProdutoNaoEncontradoException {
+            throws EmpresaNaoCadastradaException, NomeInvalidoException, AtributoNaoExisteException, ProdutoNaoEncontradoException {
         if(sistemaUsuario.validaNome(nomeProduto)){
             throw new NomeInvalidoException();
         }
@@ -82,7 +82,7 @@ public class SistemaProduto {
         }
 
         if(str.matches("invalido")){
-            throw new ProdutoAtributoNaoExisteException();
+            throw new AtributoNaoExisteException();
         }
         return str;
     }

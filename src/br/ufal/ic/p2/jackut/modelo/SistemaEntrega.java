@@ -3,11 +3,9 @@ package br.ufal.ic.p2.jackut.modelo;
 import br.ufal.ic.p2.jackut.modelo.empresa.Empresa;
 import br.ufal.ic.p2.jackut.modelo.exception.*;
 import br.ufal.ic.p2.jackut.modelo.pedido.Pedido;
-import br.ufal.ic.p2.jackut.modelo.usuario.Entregador;
 import br.ufal.ic.p2.jackut.modelo.usuario.Usuario;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class SistemaEntrega {
     private SistemaDados dados;
@@ -49,7 +47,7 @@ public class SistemaEntrega {
                 throw new EntregadorEmEntregaException();
             }
         }
-       
+
         p = dados.pedidosPorID.get(pedido);
 
         String nomeCliente = p.getNomeCliente();
@@ -62,7 +60,6 @@ public class SistemaEntrega {
         }
 
         Entrega entrega = new Entrega(dados.contadorIdEntrega,nomeCliente, nomeEmpresa, pedido,idEntregador, destino, produtos);
-        System.out.println("criou?: "+entrega.getDestino());
         dados.entregasPorID.put(dados.contadorIdEntrega, entrega);
         dados.contadorIdEntrega++;
         return entrega.getIdEntrega(); // id do produto a ser entregue
@@ -83,8 +80,8 @@ public class SistemaEntrega {
             pedido.setEstadoPedido("pronto");
     }
 
-    public int obterPedido(int idEntregador) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, EmpresaNaoCadastradaException, EntregadorSemEmpresaException, AtributoInvalidoException, ProdutoAtributoNaoExisteException, PedidoNaoEncontradoException, NaoEntregadorValidoException {
-        System.out.println("========== INICIANDO "+idEntregador+" ==========");
+    public int obterPedido(int idEntregador) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, EmpresaNaoCadastradaException, EntregadorSemEmpresaException, AtributoInvalidoException, AtributoNaoExisteException, PedidoNaoEncontradoException, NaoEntregadorValidoException, NaoExistePedidoEntregaException {
+
         if(dados.usuariosPorID.isEmpty() || !dados.usuariosPorID.containsKey(idEntregador)){
             throw new UsuarioNaoCadastradoException();
         }
@@ -98,24 +95,15 @@ public class SistemaEntrega {
         if(empresassDoEntregador.replaceAll("[\\[\\]{}]", "").isEmpty()){
             throw new EntregadorSemEmpresaException();
         }
+
         int proximoPedido = 0;
         Empresa empresa;
-
-
 
         int tamPedidos = dados.pedidosPorID.size();
         for(int j = 1; j <= tamPedidos; j++){
            Pedido p = dados.pedidosPorID.get(j);
            empresa = dados.empresasPorID.get(p.getIdEmpresa());
            if(p.getEstadoPedido().matches("pronto")){
-
-               if(true){//idEntregador == 3 && empresa.getIdEmpresa() == 3
-                   for(Pedido pp : dados.pedidosPorID.values()){
-                       if(p.getEstadoPedido().matches("pronto")) {
-                           System.out.println(dados.empresasPorID.get(pp.getIdEmpresa()).getTipoEmpresa() + " - nPedido: " + pp.getNumeroPedido() + " sts: " + pp.getEstadoPedido());
-                       }
-                   }
-               }
 
                String emailEntregadores = empresa.getEntregadoresVinculados();
                emailEntregadores = emailEntregadores.replaceAll("[\\[\\]{}]", "");
@@ -138,20 +126,16 @@ public class SistemaEntrega {
                        proximoPedido = p.getNumeroPedido();
                    }
                }
-            }
-
-
-            System.out.println("\n---- for -----\n");
+           }
+           if(proximoPedido == 0 && j == tamPedidos)
+           {
+               throw new NaoExistePedidoEntregaException();
+           }
         }
-        if(true){
-            System.out.println("PEDIDO: "+proximoPedido);
-            System.out.println("");
-        }
-
-        return proximoPedido; //retorna o id de um pedido pronto
+        return proximoPedido;
     }
 
-    public String getEntrega(int idEntrega, String atributo) throws AtributoInvalidoException, EntregaNaoEncontradaException {
+    public String getEntrega(int idEntrega, String atributo) throws AtributoInvalidoException, EntregaNaoEncontradaException, AtributoNaoExisteException {
         if(sistemaUsuario.validaNome(atributo)){
             throw new AtributoInvalidoException();
         }
@@ -167,15 +151,47 @@ public class SistemaEntrega {
                 return entrega.getNomeEmpresa();
             case "produtos":
                 return entrega.getProdutos();
+            case "cliente":
+               return entrega.getNomeCliente();
+            case "pedido":
+                return String.valueOf(entrega.getIdPedido());
+            case "entregador":
+                Usuario usuario = dados.usuariosPorID.get(entrega.getIdEntregador());
+                return usuario.getNome();
+            default:
+                throw new AtributoNaoExisteException();
         }
-        return ""; // Retorna uma string com o valor do atributo.
+    }
+    public int getIdEntrega(int idPedido) throws NaoExisteEntregaIdException, NaoExisteNadaEntregaException, AtributoInvalidoException, AtributoNaoExisteException, PedidoNaoEncontradoException {
+       if(dados.pedidosPorID == null || !dados.pedidosPorID.containsKey(idPedido)){
+            throw new NaoExisteNadaEntregaException();
+        }
+
+        int idEntrega = 0;
+        for(Entrega entrega : dados.entregasPorID.values()){
+
+            if(entrega.getIdPedido() == idPedido){
+                idEntrega = entrega.getIdEntrega();
+            }
+        }
+
+        if(idEntrega == 0){
+            throw new NaoExisteNadaEntregaException();
+        }
+
+        return idEntrega;
     }
 
-    public void entregar(int idEntrega) throws NaoExisteEntregaException {
+
+    public void entregar(int idEntrega) throws NaoExisteEntregaIdException, NaoExisteNadaEntregaException {
         if (!dados.entregasPorID.containsKey(idEntrega)) {
-            throw new NaoExisteEntregaException();
+            throw new NaoExisteNadaEntregaException();
         }
-        //throw new NaoExisteEntregaException(); entregador existe mas n tem entrega para entregar
+        Entrega entrega = dados.entregasPorID.get(idEntrega);
+        Pedido pedido = dados.pedidosPorID.get(entrega.getIdPedido());
+        pedido.setEstadoPedido("entregue");
+
+        // entregador existe mas n tem entrega para entregar
     }
 
 }

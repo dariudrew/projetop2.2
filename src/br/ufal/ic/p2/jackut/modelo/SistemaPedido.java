@@ -117,7 +117,7 @@ public class SistemaPedido {
     }
 
     public String getPedidos(int numeroPedido, String atributo)
-            throws PedidoNaoEncontradoException, AtributoInvalidoException, ProdutoAtributoNaoExisteException {
+            throws PedidoNaoEncontradoException, AtributoInvalidoException, AtributoNaoExisteException {
 
         if(!dados.pedidosPorID.containsKey(numeroPedido)){
             throw new PedidoNaoEncontradoException();
@@ -138,7 +138,7 @@ public class SistemaPedido {
             case "valor":
                 return String.format(Locale.US, "%.2f", pedido.getValorPedido());
             default:
-                throw new ProdutoAtributoNaoExisteException();
+                throw new AtributoNaoExisteException();
         }
     }
 
@@ -151,7 +151,7 @@ public class SistemaPedido {
     }
 
     public void removerProduto(int numeroPedido, String produto)
-            throws ProdutoInvalidoException, PedidoNaoEncontradoException, ProdutoNaoEncontradoException, NaoPossivelRemoverProdutoException, EmpresaNaoCadastradaException, ProdutoAtributoNaoExisteException, NomeInvalidoException {
+            throws ProdutoInvalidoException, PedidoNaoEncontradoException, ProdutoNaoEncontradoException, NaoPossivelRemoverProdutoException, EmpresaNaoCadastradaException, AtributoNaoExisteException, NomeInvalidoException {
 
         if (!dados.pedidosPorID.containsKey(numeroPedido)) {
             throw new PedidoNaoEncontradoException();
