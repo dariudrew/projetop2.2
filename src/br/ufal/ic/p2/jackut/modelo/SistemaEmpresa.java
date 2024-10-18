@@ -17,6 +17,7 @@ public class SistemaEmpresa {
     private SistemaDados dados;
     private SistemaUsuario sistemaUsuario;
 
+
     public SistemaEmpresa(SistemaDados dados){
         this.dados = dados;
         this.sistemaUsuario = new SistemaUsuario(dados);

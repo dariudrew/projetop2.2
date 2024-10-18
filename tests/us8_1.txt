@@ -99,7 +99,6 @@ expect "pronto" getPedidos pedido=${pe1} atributo="estado"
 expectError "Pedido ja liberado" liberarPedido numero=${pe1}
 
 pe=criarPedido cliente=${id1} empresa=${eid2}
-
 adicionarProduto numero=${pe} produto=${p3}
 adicionarProduto numero=${pe} produto=${p4}
 
@@ -155,14 +154,14 @@ expect ${pe1} obterPedido entregador=${id4}
 # testes de todas as combinações importantes para o comando criarEntrega.
 ###################
 
-expectError "Nao e um entregador valido" criarEntrega pedido=${pe1} entregador=${id1} destino="Rua Segura N 987"
-expectError "Nao e um entregador valido" criarEntrega pedido=${pe1} entregador=${id2} destino="Rua Segura N 987"
+expectError "Usuario nao e um entregador" criarEntrega pedido=${pe1} entregador=${id1} destino="Rua Segura N 987"
+expectError "Usuario nao e um entregador" criarEntrega pedido=${pe1} entregador=${id2} destino="Rua Segura N 987"
 
 pe4=criarPedido cliente=${id1} empresa=${eid3}
 adicionarProduto numero=${pe4} produto=${p5}
 
 expectError "Pedido nao esta pronto para entrega" criarEntrega pedido=${pe4} entregador=${id1} destino="Rua Segura N 987"
-
+#epe1 recebe pedido numero 4, farmcia
 epe1=obterPedido entregador=${id3}
 en1=criarEntrega pedido=${epe1} entregador=${id3} destino=
 

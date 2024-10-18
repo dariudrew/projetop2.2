@@ -82,7 +82,7 @@ public class SistemaPedido {
     }
 
     public void adicionarProduto(int numeroPedido, int idProduto)
-            throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException {
+            throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException, PedidoNaoEncontradoException {
 
         if(!dados.pedidosPorID.containsKey(numeroPedido)){
             throw new NaoExistePedidoAbertoException();

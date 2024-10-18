@@ -15,9 +15,11 @@ public class SistemaDados {
     int contadorIdEmpresa = 1;
     int contadorIdProduto = 1;
     int contadorIdPedido = 1;
+    int contadorIdEntrega = 1;
     Map<Integer, Empresa> empresasPorID = new HashMap<>();
     Map<Integer, Usuario> usuariosPorID = new HashMap<>();
     Map<Integer, Produto> produtosPorID = new HashMap<>();
     Map<Integer, Pedido> pedidosPorID = new HashMap<>();
+    Map<Integer, Entrega> entregasPorID = new HashMap<>();
    // XML xml = new XML();
 }
