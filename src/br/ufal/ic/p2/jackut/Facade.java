@@ -1,7 +1,7 @@
 package br.ufal.ic.p2.jackut;
 
-import br.ufal.ic.p2.jackut.modelo.*;
 import br.ufal.ic.p2.jackut.modelo.exception.*;
+import br.ufal.ic.p2.jackut.modelo.sistemaControle.*;
 
 
 public class Facade {
@@ -35,12 +35,12 @@ public class Facade {
     }
 
     public void criarUsuario(String nome, String email, String senha, String endereco)
-            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, AtributoNaoExisteException {
+            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, AtributoNaoExisteException, ErroApagarArquivoException {
         sistemaUsuario.criarUsuario(nome, email, senha, endereco);
 
     }
     public void criarUsuario(String nome, String email, String senha, String endereco, String cpf)
-            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, CPFInvalidoException, AtributoNaoExisteException {
+            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, CPFInvalidoException, AtributoNaoExisteException, ErroApagarArquivoException {
         sistemaUsuario.criarUsuario(nome, email, senha, endereco, cpf);
 
     }
@@ -53,15 +53,15 @@ public class Facade {
     }
     public int criarEmpresa(String tipoEmpresa, int dono, String nome, String endereco, String tipoCozinha)
             throws EmpresaEnderecoInvalidoException, UsuarioNaoCriaEmpresaException, EmpresaNomeEnderecoEmUsoException,
-            EmpresaTipoCozinhaInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeExisteException, TipoEmpresaInvalidoException, NomeInvalidoException {
+            EmpresaTipoCozinhaInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeExisteException, TipoEmpresaInvalidoException, NomeInvalidoException, ErroApagarArquivoException {
         return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nome, endereco, tipoCozinha);
     }
 
     public int criarEmpresa(String tipoEmpresa, int dono, String nomeMercado, String endereco, String abre, String fecha, String tipoMercado)
-            throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, EmpresaNomeInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException, FormatoHoraInvalidoException, HorarioInvalidoException, TipoEmpresaInvalidoException, NomeInvalidoException, TipoMercadoInvalidoException {
+            throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException, FormatoHoraInvalidoException, HorarioInvalidoException, TipoEmpresaInvalidoException, NomeInvalidoException, TipoMercadoInvalidoException, ErroApagarArquivoException {
         return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nomeMercado, endereco, abre, fecha,tipoMercado);
     }
-    public int criarEmpresa(String tipoEmpresa, int dono, String nomeFarmacia, String endereco, boolean abre24Horas, int numeroFuncionarios) throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, UsuarioNaoCadastradoException, TipoEmpresaInvalidoException, NomeInvalidoException, EmpresaNomeEnderecoEmUsoException, NumeroFuncionariosException, EmpresaNomeExisteException {
+    public int criarEmpresa(String tipoEmpresa, int dono, String nomeFarmacia, String endereco, boolean abre24Horas, int numeroFuncionarios) throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, UsuarioNaoCadastradoException, TipoEmpresaInvalidoException, NomeInvalidoException, EmpresaNomeEnderecoEmUsoException, NumeroFuncionariosException, EmpresaNomeExisteException, ErroApagarArquivoException {
         return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nomeFarmacia, endereco, abre24Horas,numeroFuncionarios);
     }
 
@@ -92,7 +92,7 @@ public class Facade {
         return  sistemaUsuario.getEmpresas(entregador);
     }
 
-    public int criarProduto(int idEmpresa, String nomeProduto, float valorProduto, String categoriaProduto) throws EmpresaNaoCadastradaException, NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoJaExisteNaEmpresaException {
+    public int criarProduto(int idEmpresa, String nomeProduto, float valorProduto, String categoriaProduto) throws EmpresaNaoCadastradaException, NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoJaExisteNaEmpresaException, ErroApagarArquivoException {
         return sistemaProduto.criarProduto(idEmpresa, nomeProduto, valorProduto, categoriaProduto);
     }
 
@@ -108,7 +108,7 @@ public class Facade {
         return sistemaProduto.listarProdutos(idEmpresa);
     }
 
-    public int criarPedido(int idCliente, int idEmpresa) throws EmpresaNaoCadastradaException, DonoNaoFazPedidoException, UsuarioNaoCadastradoException, AtributoInvalidoException, NaoPermitidoPedidosAbertoMesmaEmpresaException {
+    public int criarPedido(int idCliente, int idEmpresa) throws EmpresaNaoCadastradaException, DonoNaoFazPedidoException, UsuarioNaoCadastradoException, AtributoInvalidoException, NaoPermitidoPedidosAbertoMesmaEmpresaException, ErroApagarArquivoException {
         return sistemaPedido.criarPedido(idCliente, idEmpresa);
     }
 
@@ -133,7 +133,7 @@ public class Facade {
     public void removerProduto(int numeroPedido, String produto) throws ProdutoInvalidoException, PedidoNaoEncontradoException, NaoPossivelRemoverProdutoException, ProdutoNaoEncontradoException, EmpresaNaoCadastradaException, AtributoNaoExisteException, NomeInvalidoException {
         sistemaPedido.removerProduto(numeroPedido, produto);
     }
-    public int criarEntrega(int pedido, int idEntregador, String destino) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, PedidoNaoProntoException, EntregadorEmEntregaException {
+    public int criarEntrega(int pedido, int idEntregador, String destino) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, PedidoNaoProntoException, EntregadorEmEntregaException, ErroApagarArquivoException {
         return sistemaEntrega.criarEntrega(pedido, idEntregador, destino);
     }
 
