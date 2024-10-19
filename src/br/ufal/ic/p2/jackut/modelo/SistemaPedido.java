@@ -7,10 +7,10 @@ import br.ufal.ic.p2.jackut.modelo.pedido.Pedido;
 import java.util.Locale;
 
 public class SistemaPedido {
-    private SistemaDados dados;
-    private SistemaUsuario sistemaUsuario;
-    private SistemaEmpresa sistemaEmpresa;
-    private SistemaProduto sistemaProduto;
+    private final SistemaDados dados;
+    private final SistemaUsuario sistemaUsuario;
+    private final SistemaEmpresa sistemaEmpresa;
+    private final SistemaProduto sistemaProduto;
 
     public SistemaPedido(SistemaDados dados){
         this.dados = dados;
@@ -21,7 +21,8 @@ public class SistemaPedido {
 
 
     public int criarPedido(int idCliente, int idEmpresa)
-            throws EmpresaNaoCadastradaException, DonoNaoFazPedidoException, UsuarioNaoCadastradoException, AtributoInvalidoException, NaoPermitidoPedidosAbertoMesmaEmpresaException {
+            throws EmpresaNaoCadastradaException, DonoNaoFazPedidoException, UsuarioNaoCadastradoException,
+            AtributoInvalidoException, NaoPermitidoPedidosAbertoMesmaEmpresaException {
 
         validaDadosPedido(idCliente, idEmpresa);
         String nomeCliente = sistemaUsuario.getAtributoUsuario(idCliente, "nome");
@@ -32,7 +33,9 @@ public class SistemaPedido {
         return pedido.getNumeroPedido(); //numero do pedido
     }
 
-    public void validaDadosPedido(int idCliente, int idEmpresa) throws UsuarioNaoCadastradoException, EmpresaNaoCadastradaException, DonoNaoFazPedidoException, NaoPermitidoPedidosAbertoMesmaEmpresaException {
+    public void validaDadosPedido(int idCliente, int idEmpresa)
+            throws UsuarioNaoCadastradoException, EmpresaNaoCadastradaException, DonoNaoFazPedidoException,
+            NaoPermitidoPedidosAbertoMesmaEmpresaException {
 
         if(!dados.usuariosPorID.containsKey(idCliente)){
             throw new UsuarioNaoCadastradoException();
@@ -46,7 +49,8 @@ public class SistemaPedido {
 
         for(Pedido pedido: dados.pedidosPorID.values()){//
 
-            if(pedido.getIdCliente() == idCliente && pedido.getIdEmpresa() == idEmpresa){//testart o if abaixo
+            if(pedido.getIdCliente() == idCliente && pedido.getIdEmpresa() == idEmpresa){
+
                 if(pedido.getEstadoPedido().equals("aberto")){
                     throw new NaoPermitidoPedidosAbertoMesmaEmpresaException();
                 }
@@ -82,7 +86,7 @@ public class SistemaPedido {
     }
 
     public void adicionarProduto(int numeroPedido, int idProduto)
-            throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException, PedidoNaoEncontradoException {
+            throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException{
 
         if(!dados.pedidosPorID.containsKey(numeroPedido)){
             throw new NaoExistePedidoAbertoException();
@@ -126,20 +130,14 @@ public class SistemaPedido {
             throw new AtributoInvalidoException();
         }
         Pedido pedido = dados.pedidosPorID.get(numeroPedido);
-        switch (atributo){
-            case "cliente":
-                return pedido.getNomeCliente();
-            case "empresa":
-                return pedido.getNomeEmpresa();
-            case "estado":
-                return  pedido.getEstadoPedido();
-            case "produtos":
-                return pedido.getProdutos();
-            case "valor":
-                return String.format(Locale.US, "%.2f", pedido.getValorPedido());
-            default:
-                throw new AtributoNaoExisteException();
-        }
+        return switch (atributo) {
+            case "cliente" -> pedido.getNomeCliente();
+            case "empresa" -> pedido.getNomeEmpresa();
+            case "estado" -> pedido.getEstadoPedido();
+            case "produtos" -> pedido.getProdutos();
+            case "valor" -> String.format(Locale.US, "%.2f", pedido.getValorPedido());
+            default -> throw new AtributoNaoExisteException();
+        };
     }
 
     public void fecharPedido(int numeroPedido) throws PedidoNaoEncontradoException {
@@ -151,7 +149,9 @@ public class SistemaPedido {
     }
 
     public void removerProduto(int numeroPedido, String produto)
-            throws ProdutoInvalidoException, PedidoNaoEncontradoException, ProdutoNaoEncontradoException, NaoPossivelRemoverProdutoException, EmpresaNaoCadastradaException, AtributoNaoExisteException, NomeInvalidoException {
+            throws ProdutoInvalidoException, PedidoNaoEncontradoException, ProdutoNaoEncontradoException,
+            NaoPossivelRemoverProdutoException, EmpresaNaoCadastradaException, AtributoNaoExisteException,
+            NomeInvalidoException {
 
         if (!dados.pedidosPorID.containsKey(numeroPedido)) {
             throw new PedidoNaoEncontradoException();
@@ -161,6 +161,17 @@ public class SistemaPedido {
 
 
         Pedido pedido = dados.pedidosPorID.get(numeroPedido);
+        String produtosDoPedido = getStringProdutos(produto, pedido);
+
+        pedido.setProdutos(produtosDoPedido);
+        String valorProduto = sistemaProduto.getProduto(produto, pedido.getIdEmpresa(), "valor");
+        float valorP = Float.parseFloat(valorProduto);
+        pedido.setValorPedido(-valorP);
+
+
+    }
+
+    private static String getStringProdutos(String produto, Pedido pedido) throws NaoPossivelRemoverProdutoException, ProdutoNaoEncontradoException {
         String produtosDoPedido = pedido.getProdutos();
 
         if (!(pedido.getEstadoPedido().equals("aberto"))) {
@@ -178,13 +189,6 @@ public class SistemaPedido {
         } else if (produtosDoPedido.contains(", " + produto + "]")) {
             produtosDoPedido = produtosDoPedido.replaceFirst(", " + produto, "");
         }
-
-        //atualizando os produtos do pedido
-        pedido.setProdutos(produtosDoPedido);
-        String valorProduto = sistemaProduto.getProduto(produto, pedido.getIdEmpresa(), "valor");
-        float valorP = Float.valueOf(valorProduto);
-        pedido.setValorPedido(-valorP);
-
-
+        return produtosDoPedido;
     }
 }

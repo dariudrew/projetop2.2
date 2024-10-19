@@ -35,20 +35,20 @@ public class Facade {
     }
 
     public void criarUsuario(String nome, String email, String senha, String endereco)
-            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException {
+            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, AtributoNaoExisteException {
         sistemaUsuario.criarUsuario(nome, email, senha, endereco);
 
     }
     public void criarUsuario(String nome, String email, String senha, String endereco, String cpf)
-            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, CPFInvalidoException {
+            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, CPFInvalidoException, AtributoNaoExisteException {
         sistemaUsuario.criarUsuario(nome, email, senha, endereco, cpf);
 
     }
     public void criarUsuario(String nome, String email, String senha, String endereco, String veiculo, String placa)
-            throws EmailJaExisteException, NomeInvalidoException, EmailInvalidoException, FormatoPlacaException, EnderecoInvalidoException, SenhaInvalidaException, NomeVeiculoInvalidoException, PlacaInvalidoException {
+            throws EmailJaExisteException, NomeInvalidoException, EmailInvalidoException, FormatoPlacaException, EnderecoInvalidoException, SenhaInvalidaException, NomeVeiculoInvalidoException, PlacaInvalidoException, AtributoNaoExisteException {
         sistemaUsuario.criarUsuario(nome, email, senha, endereco, veiculo, placa);
     }
-    public int login(String email, String senha) throws LoginSenhaException {
+    public int login(String email, String senha) throws LoginSenhaException, AtributoNaoExisteException {
         return sistemaUsuario.login(email, senha);
     }
     public int criarEmpresa(String tipoEmpresa, int dono, String nome, String endereco, String tipoCozinha)
@@ -61,7 +61,7 @@ public class Facade {
             throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, EmpresaNomeInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException, FormatoHoraInvalidoException, HorarioInvalidoException, TipoEmpresaInvalidoException, NomeInvalidoException, TipoMercadoInvalidoException {
         return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nomeMercado, endereco, abre, fecha,tipoMercado);
     }
-    public int criarEmpresa(String tipoEmpresa, int dono, String nomeFarmacia, String endereco, boolean abre24Horas, int numeroFuncionarios) throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, UsuarioNaoCadastradoException, TipoEmpresaInvalidoException, NomeInvalidoException, HorarioInvalidoException, EmpresaNomeEnderecoEmUsoException, NumeroFuncionariosException, EmpresaNomeExisteException {
+    public int criarEmpresa(String tipoEmpresa, int dono, String nomeFarmacia, String endereco, boolean abre24Horas, int numeroFuncionarios) throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, UsuarioNaoCadastradoException, TipoEmpresaInvalidoException, NomeInvalidoException, EmpresaNomeEnderecoEmUsoException, NumeroFuncionariosException, EmpresaNomeExisteException {
         return sistemaEmpresa.criarEmpresa(tipoEmpresa, dono, nomeFarmacia, endereco, abre24Horas,numeroFuncionarios);
     }
 
@@ -117,7 +117,7 @@ public class Facade {
         return sistemaPedido.getNumeroPedido(idCliente, idEmpresa, indice);
     }
 
-    public void adicionarProduto(int numeroPedido, int idProduto) throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException, PedidoNaoEncontradoException {
+    public void adicionarProduto(int numeroPedido, int idProduto) throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException {
         sistemaPedido.adicionarProduto(numeroPedido, idProduto);
     }
 
@@ -133,7 +133,7 @@ public class Facade {
     public void removerProduto(int numeroPedido, String produto) throws ProdutoInvalidoException, PedidoNaoEncontradoException, NaoPossivelRemoverProdutoException, ProdutoNaoEncontradoException, EmpresaNaoCadastradaException, AtributoNaoExisteException, NomeInvalidoException {
         sistemaPedido.removerProduto(numeroPedido, produto);
     }
-    public int criarEntrega(int pedido, int idEntregador, String destino) throws EnderecoInvalidoException, PedidoNaoEncontradoException, UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, PedidoNaoProntoException, NaoEntregadorValidoException, EntregadorEmEntregaException {
+    public int criarEntrega(int pedido, int idEntregador, String destino) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, PedidoNaoProntoException, EntregadorEmEntregaException {
         return sistemaEntrega.criarEntrega(pedido, idEntregador, destino);
     }
 
@@ -141,18 +141,18 @@ public class Facade {
         sistemaEntrega.liberarPedido(numero);
     }
 
-    public int obterPedido(int idEntregador) throws EmpresaNaoCadastradaException, UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, EntregadorSemEmpresaException, AtributoInvalidoException, AtributoNaoExisteException, PedidoNaoEncontradoException, NaoEntregadorValidoException, NaoExistePedidoEntregaException {
+    public int obterPedido(int idEntregador) throws EmpresaNaoCadastradaException, UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, EntregadorSemEmpresaException, NaoExistePedidoEntregaException {
         return sistemaEntrega.obterPedido(idEntregador);
     }
 
     public String getEntrega(int idEntrega, String atributo) throws AtributoInvalidoException, EntregaNaoEncontradaException, AtributoNaoExisteException {
         return sistemaEntrega.getEntrega(idEntrega, atributo);
     }
-    public int getIdEntrega(int pedido) throws EntregaNaoEncontradaException, PedidoNaoEncontradoException, NaoExisteEntregaIdException, NaoExisteNadaEntregaException, AtributoInvalidoException, AtributoNaoExisteException {
+    public int getIdEntrega(int pedido) throws NaoExisteEntregaIdException, NaoExisteNadaEntregaException{
         return sistemaEntrega.getIdEntrega(pedido);
     }
 
-    public void entregar(int idEntrega) throws NaoExisteEntregaIdException, NaoExisteNadaEntregaException {
+    public void entregar(int idEntrega) throws NaoExisteNadaEntregaException {
         sistemaEntrega.entregar(idEntrega);
     }
 

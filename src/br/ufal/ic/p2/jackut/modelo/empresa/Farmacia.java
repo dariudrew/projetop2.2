@@ -1,8 +1,8 @@
 package br.ufal.ic.p2.jackut.modelo.empresa;
 
 public class Farmacia extends Empresa{
-    private boolean aberto24Horas;
-    private int numeroFuncionarios;
+    private final boolean aberto24Horas;
+    private final int numeroFuncionarios;
 
     public Farmacia(int idEmpresa, int idDono, String nomeEmpresa, String enderecoEmpresa, boolean aberto24Horas, int numeroFuncionarios){
         super(idEmpresa, idDono, nomeEmpresa, enderecoEmpresa);

@@ -2,7 +2,6 @@ package br.ufal.ic.p2.jackut.modelo;
 
 
 import br.ufal.ic.p2.jackut.modelo.empresa.Empresa;
-import br.ufal.ic.p2.jackut.modelo.empresa.produto.Produto;
 import br.ufal.ic.p2.jackut.modelo.exception.*;
 
 
@@ -16,11 +15,10 @@ import java.lang.reflect.Method;
 
 
 public class SistemaUsuario {
-    private SistemaDados dados;
+    private final SistemaDados dados;
   public SistemaUsuario(SistemaDados dados){
       this.dados = dados;
   }
-
 
     public void zerarSistema(){
 
@@ -29,6 +27,7 @@ public class SistemaUsuario {
             dados.contadorIdEmpresa--;
             dados.contadorIdProduto--;
             dados.contadorIdPedido--;
+            dados.contadorIdEntrega--;
 
             if(dados.contadorID > 0){
                 dados.usuariosPorID.remove(dados.contadorID);
@@ -42,18 +41,20 @@ public class SistemaUsuario {
             if(dados.contadorIdPedido > 0){
                 dados.pedidosPorID.remove(dados.contadorIdPedido);
             }
+            if(dados.contadorIdEntrega > 0){
+                dados.entregasPorID.remove(dados.contadorIdEntrega);
+            }
 
         }
-
         dados.contadorID = 1;
         dados.contadorIdEmpresa = 1;
         dados.contadorIdProduto = 1;
         dados.contadorIdPedido = 1;
-
+        dados.contadorIdEntrega = 1;
     }
 
     public void criarUsuario(String nome, String email, String senha, String endereco)
-            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException {
+            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, AtributoNaoExisteException {
 
         validaDados(nome, email, senha, endereco);
         if(getIdUsuario("Email", email) > 0){
@@ -61,15 +62,12 @@ public class SistemaUsuario {
         }
         Cliente cliente = new Cliente(dados.contadorID, nome, email, senha, endereco);
 
-       if(dados.contadorID == 0){
-           //xml.criarXML();
-       }
-        //xml.inserirUsuario(cliente);
+
         dados.usuariosPorID.put(dados.contadorID, cliente);
         dados.contadorID+=1;
     }
     public void criarUsuario(String nome, String email, String senha, String endereco, String cpf)
-            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, CPFInvalidoException {
+            throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, CPFInvalidoException, AtributoNaoExisteException {
         validaCPF(cpf);
         validaDados(nome, email, senha, endereco);
         if(getIdUsuario("Email", email) > 0){
@@ -81,7 +79,7 @@ public class SistemaUsuario {
         dados.usuariosPorID.put(dados.contadorID, donoEmpresa);
         dados.contadorID+=1;
     }
-    public void criarUsuario(String nome, String email, String senha, String endereco, String veiculo, String placa) throws EmailJaExisteException, NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, NomeVeiculoInvalidoException, PlacaInvalidoException, FormatoPlacaException {
+    public void criarUsuario(String nome, String email, String senha, String endereco, String veiculo, String placa) throws EmailJaExisteException, NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, NomeVeiculoInvalidoException, PlacaInvalidoException, FormatoPlacaException, AtributoNaoExisteException {
         validaDados(nome, email, senha, endereco);
         if(validaNome(veiculo)){
             throw new NomeVeiculoInvalidoException();
@@ -93,10 +91,6 @@ public class SistemaUsuario {
         if(getIdUsuario("Email", email) > 0){
             throw new EmailJaExisteException();
         }
-        /*if(!placa.matches("^BRA %d{4}$")){
-            throw new PlacaInvalidoException();
-        }*/
-
 
         Entregador entregador = new Entregador(dados.contadorID, nome, email, senha, endereco, veiculo, placa);
         dados.usuariosPorID.put(dados.contadorID, entregador);
@@ -104,7 +98,7 @@ public class SistemaUsuario {
     }
 
     public void validaDados(String nome, String email, String senha, String endereco)
-            throws NomeInvalidoException, EmailInvalidoException, SenhaInvalidaException, EnderecoInvalidoException, EmailJaExisteException {
+            throws NomeInvalidoException, EmailInvalidoException, SenhaInvalidaException, EnderecoInvalidoException{
         if(validaNome(nome)){
             throw new NomeInvalidoException();
         }
@@ -132,13 +126,10 @@ public class SistemaUsuario {
     }
 
     public boolean validaNome(String nome){
-        if(nome == null || nome.isEmpty() || nome.isBlank()){
-            return true;
-        }
-         return false;
+        return nome == null || nome.isEmpty() || nome.isBlank();
     }
 
-    public int getIdUsuario(String tipoMetodo, String atributo){
+    public int getIdUsuario(String tipoMetodo, String atributo) throws AtributoNaoExisteException {
         try {
             String metodoNome = "get" + tipoMetodo;
 
@@ -154,8 +145,7 @@ public class SistemaUsuario {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();//criar uma excessão??
-
+            throw new AtributoNaoExisteException();
         }
         return 0;
     }
@@ -189,13 +179,14 @@ public class SistemaUsuario {
                 case "placa":
                     return usuario.getPlaca();
             }
-        }else{
+        }
+        else{
             throw new UsuarioNaoCadastradoException();
         }
         return "";
     }
 
-    public int login (String email, String senha) throws LoginSenhaException {
+    public int login (String email, String senha) throws LoginSenhaException, AtributoNaoExisteException {
 
         if(validaEmail(email) || validaSenha(senha)){
             throw new LoginSenhaException();
@@ -246,7 +237,7 @@ public class SistemaUsuario {
             str = str.concat(usuario.getEmail()+"]}");
         }
         empresa.setEntregadoresVinculados(str);
-    }//fazer método "remover entregador"
+    }
 
     public String getEntregadores(int idEmpresa) throws EmpresaNaoEncontradaException {
       if(dados.empresasPorID.isEmpty() || !dados.empresasPorID.containsKey(idEmpresa)){
@@ -283,9 +274,9 @@ public class SistemaUsuario {
             if (i == 1) {
                 listaEmpresas = listaEmpresas.concat("{[");
             }
-            for (int j = 0; j < listaEntregadoresaArray.length; j++) {
+            for (String s : listaEntregadoresaArray) {
 
-                if (usuario.getEmail().matches(listaEntregadoresaArray[j])) {
+                if (usuario.getEmail().matches(s)) {
                     if (listaEmpresas.matches("^\\{\\[\\[.*")) {       //veifica se a string terminar com letras, para saber quando add virgula e espaçamento entre as produtos.
                         listaEmpresas = listaEmpresas.concat(", ");
                     }

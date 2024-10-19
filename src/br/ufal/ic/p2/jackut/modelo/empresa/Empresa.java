@@ -2,10 +2,10 @@ package br.ufal.ic.p2.jackut.modelo.empresa;
 
 public class Empresa {
 
-    private int idEmpresa;
-    private int idDono;
-    private String nomeEmpresa;
-    private String enderecoEmpresa;
+    private final int idEmpresa;
+    private final int idDono;
+    private final String nomeEmpresa;
+    private final String enderecoEmpresa;
     private String entregadoresVinculados = "{[]}";
 
 

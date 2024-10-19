@@ -1,13 +1,13 @@
 package br.ufal.ic.p2.jackut.modelo.pedido;
 
 public class Pedido {
-    int numeroPedido;
-    int idCliente;
-    int idEmpresa;
-    String nomeCliente;
-    String nomeEmpresa;
-    String estadoPedido;
-    String produtos = "{[]}";
+    private final int numeroPedido;
+    private final int idCliente;
+    private final int idEmpresa;
+    private final String nomeCliente;
+    private final String nomeEmpresa;
+    private String estadoPedido;
+    private String produtos = "{[]}";
     float valorPedido = 0.0f;
 
     public Pedido(int numeroPedido, String nomeCliente, String nomeEmpresa, String estadoPedido, int idCliente, int idEmpresa){

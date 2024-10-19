@@ -6,15 +6,16 @@ import br.ufal.ic.p2.jackut.modelo.exception.*;
 import java.util.Locale;
 
 public class SistemaProduto {
-    private SistemaDados dados;
-    private SistemaUsuario sistemaUsuario;
+    private final SistemaDados dados;
+    private final SistemaUsuario sistemaUsuario;
 
     public SistemaProduto(SistemaDados dados){
         this.dados = dados;
         this.sistemaUsuario = new SistemaUsuario(dados);
     }
     public int criarProduto(int idEmpresa, String nomeProduto, float valorProduto, String categoriaProduto)
-            throws EmpresaNaoCadastradaException, NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoJaExisteNaEmpresaException {
+            throws EmpresaNaoCadastradaException, NomeInvalidoException,
+            ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoJaExisteNaEmpresaException {
 
         validaDadosProduto(idEmpresa, nomeProduto, valorProduto, categoriaProduto);
         Produto produto = new Produto(dados.contadorIdProduto, nomeProduto, valorProduto, categoriaProduto,idEmpresa);
@@ -65,20 +66,20 @@ public class SistemaProduto {
                 throw new ProdutoNaoEncontradoException();
             }
         }
-        String str = "";
+        String str;
 
-        if(atributo.equals("valor")) {
-            float valor = produto.getValorProduto();
-            str = String.format(Locale.US, "%.2f", valor);
-        }
-        else if(atributo.equals("categoria")){
-            str = produto.getCategoria();
-        }
-        else if(atributo.equals("empresa")){
-            str = dados.empresasPorID.get(idEmpresa).getNomeEmpresa();
-        }
-        else{
-            str = "invalido";
+        switch (atributo) {
+            case "valor" -> {
+                assert produto != null;
+                float valor = produto.getValorProduto();
+                str = String.format(Locale.US, "%.2f", valor);
+            }
+            case "categoria" -> {
+                assert produto != null;
+                str = produto.getCategoria();
+            }
+            case "empresa" -> str = dados.empresasPorID.get(idEmpresa).getNomeEmpresa();
+            default -> str = "invalido";
         }
 
         if(str.matches("invalido")){
@@ -123,7 +124,8 @@ public class SistemaProduto {
         return produtosPorEmpresa;
     }
     public void validaDadosProduto(int idEmpresa, String nomeProduto, float valorProduto, String categoriaProduto)
-            throws EmpresaNaoCadastradaException, NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoJaExisteNaEmpresaException {
+            throws EmpresaNaoCadastradaException, NomeInvalidoException, ProdutoValorInvalidoExcepion,
+            ProdutoCategoriaInvalidaException, ProdutoJaExisteNaEmpresaException {
 
         if(!dados.empresasPorID.containsKey(idEmpresa)){
             throw new EmpresaNaoCadastradaException();

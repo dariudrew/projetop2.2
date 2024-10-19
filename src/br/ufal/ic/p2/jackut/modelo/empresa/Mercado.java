@@ -3,7 +3,7 @@ package br.ufal.ic.p2.jackut.modelo.empresa;
 public class Mercado extends Empresa{
    private String abre;
    private String fecha;
-   private String tipoMercado;
+   private final  String tipoMercado;
 
    public Mercado(int idEmpresa, int idDono, String nomeEmpresa, String enderecoEmpresa, String abre, String fecha, String tipoMercado){
         super(idEmpresa, idDono, nomeEmpresa, enderecoEmpresa);

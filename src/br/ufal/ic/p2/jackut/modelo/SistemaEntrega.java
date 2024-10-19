@@ -5,24 +5,18 @@ import br.ufal.ic.p2.jackut.modelo.exception.*;
 import br.ufal.ic.p2.jackut.modelo.pedido.Pedido;
 import br.ufal.ic.p2.jackut.modelo.usuario.Usuario;
 
-import java.util.ArrayList;
 
 public class SistemaEntrega {
     private SistemaDados dados;
     private SistemaUsuario sistemaUsuario;
-    private SistemaEmpresa sistemaEmpresa;
-    private SistemaProduto sistemaProduto;
-    private SistemaPedido sistemaPedido;
-    private ArrayList pedidosProntos;
+
 
     public SistemaEntrega(SistemaDados dados){
         this.dados = dados;
         this.sistemaUsuario = new SistemaUsuario(dados);
-        this.sistemaEmpresa = new SistemaEmpresa(dados);
-        this.sistemaProduto = new SistemaProduto(dados);
-        this.sistemaPedido = new SistemaPedido(dados);
     }
-    public int criarEntrega(int pedido, int idEntregador, String destino) throws PedidoNaoEncontradoException, UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, EnderecoInvalidoException, PedidoNaoProntoException, NaoEntregadorValidoException, EntregadorEmEntregaException {
+    public int criarEntrega(int pedido, int idEntregador, String destino) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException,
+            PedidoNaoProntoException, EntregadorEmEntregaException {
 
         if(!dados.usuariosPorID.containsKey(idEntregador)){
             throw new UsuarioNaoCadastradoException();
@@ -37,7 +31,7 @@ public class SistemaEntrega {
 
 
 
-        //entregador ta livre?
+
         Pedido p;
         for(int i = 1; i<= dados.entregasPorID.size(); i++){
             Entrega entrega = dados.entregasPorID.get(i);
@@ -62,7 +56,7 @@ public class SistemaEntrega {
         Entrega entrega = new Entrega(dados.contadorIdEntrega,nomeCliente, nomeEmpresa, pedido,idEntregador, destino, produtos);
         dados.entregasPorID.put(dados.contadorIdEntrega, entrega);
         dados.contadorIdEntrega++;
-        return entrega.getIdEntrega(); // id do produto a ser entregue
+        return entrega.getIdEntrega();
     }
 
     public void liberarPedido(int numero) throws PedidoNaoEncontradoException, PedidoLiberadoException, NaoPossivelLiberarPedidoException {
@@ -80,7 +74,8 @@ public class SistemaEntrega {
             pedido.setEstadoPedido("pronto");
     }
 
-    public int obterPedido(int idEntregador) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, EmpresaNaoCadastradaException, EntregadorSemEmpresaException, AtributoInvalidoException, AtributoNaoExisteException, PedidoNaoEncontradoException, NaoEntregadorValidoException, NaoExistePedidoEntregaException {
+    public int obterPedido(int idEntregador) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException,
+            EmpresaNaoCadastradaException, EntregadorSemEmpresaException, NaoExistePedidoEntregaException {
 
         if(dados.usuariosPorID.isEmpty() || !dados.usuariosPorID.containsKey(idEntregador)){
             throw new UsuarioNaoCadastradoException();
@@ -136,6 +131,7 @@ public class SistemaEntrega {
     }
 
     public String getEntrega(int idEntrega, String atributo) throws AtributoInvalidoException, EntregaNaoEncontradaException, AtributoNaoExisteException {
+
         if(sistemaUsuario.validaNome(atributo)){
             throw new AtributoInvalidoException();
         }
@@ -162,7 +158,8 @@ public class SistemaEntrega {
                 throw new AtributoNaoExisteException();
         }
     }
-    public int getIdEntrega(int idPedido) throws NaoExisteEntregaIdException, NaoExisteNadaEntregaException, AtributoInvalidoException, AtributoNaoExisteException, PedidoNaoEncontradoException {
+
+    public int getIdEntrega(int idPedido) throws NaoExisteEntregaIdException, NaoExisteNadaEntregaException{
        if(dados.pedidosPorID == null || !dados.pedidosPorID.containsKey(idPedido)){
             throw new NaoExisteNadaEntregaException();
         }
@@ -183,7 +180,7 @@ public class SistemaEntrega {
     }
 
 
-    public void entregar(int idEntrega) throws NaoExisteEntregaIdException, NaoExisteNadaEntregaException {
+    public void entregar(int idEntrega) throws NaoExisteNadaEntregaException {
         if (!dados.entregasPorID.containsKey(idEntrega)) {
             throw new NaoExisteNadaEntregaException();
         }

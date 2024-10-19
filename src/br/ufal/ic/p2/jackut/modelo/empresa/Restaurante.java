@@ -1,7 +1,7 @@
 package br.ufal.ic.p2.jackut.modelo.empresa;
 
 public class Restaurante extends Empresa{
-     String tipoCozinha;
+     private final String tipoCozinha;
     public Restaurante(int idEmpresa, int idDono, String nomeEmpresa, String enderecoEmpresa, String tipoCozinha){
         super(idEmpresa, idDono, nomeEmpresa, enderecoEmpresa);
         this.tipoCozinha = tipoCozinha;

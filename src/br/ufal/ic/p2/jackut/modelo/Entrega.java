@@ -1,13 +1,13 @@
 package br.ufal.ic.p2.jackut.modelo;
 
 public class Entrega {
-    private int idEntrega;
-    private String nomeCliente;
-    private String nomeEmpresa;
-    private int idPedido;
-    private int idEntregador;
-    private String destino;
-    private String produtos;
+    private final int idEntrega;
+    private final String nomeCliente;
+    private final String nomeEmpresa;
+    private final int idPedido;
+    private final int idEntregador;
+    private final String destino;
+    private final String produtos;
 
     public Entrega(int idEntrega, String nomeCliente, String nomeEmpresa, int idPedido, int idEntregador, String destino, String produtos){
         this.idEntrega = idEntrega;
