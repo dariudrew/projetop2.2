@@ -176,7 +176,7 @@ public class SistemaEntrega {
         }
 
         if(idEntrega == 0){
-            throw new NaoExisteNadaEntregaException();
+            throw new NaoExisteEntregaIdException();
         }
 
         return idEntrega;
@@ -190,8 +190,6 @@ public class SistemaEntrega {
         Entrega entrega = dados.entregasPorID.get(idEntrega);
         Pedido pedido = dados.pedidosPorID.get(entrega.getIdPedido());
         pedido.setEstadoPedido("entregue");
-
-        // entregador existe mas n tem entrega para entregar
     }
 
 }
