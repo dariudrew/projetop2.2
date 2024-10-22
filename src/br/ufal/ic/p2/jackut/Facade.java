@@ -1,6 +1,13 @@
 package br.ufal.ic.p2.jackut;
 
-import br.ufal.ic.p2.jackut.modelo.exception.*;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.*;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.EmpresaNomeEnderecoEmUsoException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.EmpresaNomeExisteException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.NomeInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.NomeVeiculoInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.*;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.*;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.*;
 import br.ufal.ic.p2.jackut.modelo.sistemaControle.*;
 
 
@@ -23,7 +30,7 @@ public class Facade {
 
 
     public void zerarSistema(){
-        sistemaUsuario.zerarSistema();
+        dados.zerarSistema();
     }
 
     public void encerrarSistema(){

@@ -4,29 +4,36 @@ import br.ufal.ic.p2.jackut.modelo.empresa.Empresa;
 import br.ufal.ic.p2.jackut.modelo.empresa.Farmacia;
 import br.ufal.ic.p2.jackut.modelo.empresa.Mercado;
 import br.ufal.ic.p2.jackut.modelo.empresa.Restaurante;
-import br.ufal.ic.p2.jackut.modelo.exception.*;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.*;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.EmpresaNomeEnderecoEmUsoException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.EmpresaNomeExisteException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.NomeInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.EmpresaNaoCadastradaException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.EmpresaNaoEncontradaException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.NaoExisteEmpresaException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.NaoMercadoValidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.NumeroFuncionariosException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.UsuarioNaoCadastradoException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.UsuarioNaoCriaEmpresaException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.ErroApagarArquivoException;
 import br.ufal.ic.p2.jackut.modelo.usuario.Usuario;
 
-
-import java.time.Duration;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.lang.Math;
+
 
 public class SistemaEmpresa {
     private SistemaDados dados;
-    private SistemaUsuario sistemaUsuario;
+
 
 
     public SistemaEmpresa(SistemaDados dados){
         this.dados = dados;
-        this.sistemaUsuario = new SistemaUsuario(dados);
     }
 
     public int criarEmpresa(String tipoEmpresa, int dono, String nomeEmpresa, String endereco, String tipoCozinha) throws
             UsuarioNaoCadastradoException, EmpresaEnderecoInvalidoException, EmpresaTipoCozinhaInvalidoException, UsuarioNaoCriaEmpresaException,
             EmpresaNomeExisteException, EmpresaNomeEnderecoEmUsoException, TipoEmpresaInvalidoException, NomeInvalidoException, ErroApagarArquivoException {
-        validaDadosRestaurante(tipoEmpresa, dono, nomeEmpresa, endereco, tipoCozinha);
+        dados.validaDadosRestaurante(tipoEmpresa, dono, nomeEmpresa, endereco, tipoCozinha);
         Restaurante restaurante = new Restaurante(dados.contadorIdEmpresa, dono, nomeEmpresa, endereco, tipoCozinha);
 
         if (tipoEmpresa.matches("restaurante")){
@@ -39,19 +46,11 @@ public class SistemaEmpresa {
         }
         return restaurante.getIdEmpresa();
     }
-    public void validaDadosRestaurante(String tipoEmpresa, int dono, String nome, String endereco, String tipoCozinha)
-            throws UsuarioNaoCadastradoException, UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException, EmpresaTipoCozinhaInvalidoException, TipoEmpresaInvalidoException, NomeInvalidoException {
-        validaDadosGeraisEmpresa(tipoEmpresa, dono, nome, endereco);
-        if(sistemaUsuario.validaNome(tipoCozinha)){
-            throw new EmpresaTipoCozinhaInvalidoException();
-        }
-        verificaEmpresa(nome, dono, endereco);
-    }
 
     public int criarEmpresa(String tipoEmpresa, int dono, String nomeMercado, String endereco, String abre, String fecha, String tipoMercado)
             throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, UsuarioNaoCadastradoException, EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException, FormatoHoraInvalidoException, HorarioInvalidoException, TipoEmpresaInvalidoException, NomeInvalidoException, TipoMercadoInvalidoException, ErroApagarArquivoException {
 
-        validaDadosMercado(tipoEmpresa, dono, nomeMercado, endereco, abre, fecha,tipoMercado);
+        dados.validaDadosMercado(tipoEmpresa, dono, nomeMercado, endereco, abre, fecha,tipoMercado);
         Mercado mercado = new Mercado(dados.contadorIdEmpresa, dono, nomeMercado, endereco,abre, fecha, tipoMercado);
         if(tipoEmpresa.matches("mercado")){
             dados.empresasPorID.put(dados.contadorIdEmpresa, mercado);
@@ -65,29 +64,12 @@ public class SistemaEmpresa {
         return mercado.getIdEmpresa();
     }
 
-    public void validaDadosMercado(String tipoEmpresa, int dono, String nomeMercado, String endereco, String abre, String fecha, String tipoMercado)
-            throws TipoEmpresaInvalidoException, HorarioInvalidoException, FormatoHoraInvalidoException,
-            EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException, EmpresaEnderecoInvalidoException,
-            UsuarioNaoCriaEmpresaException, UsuarioNaoCadastradoException, NomeInvalidoException, TipoMercadoInvalidoException {
-
-        validaDadosGeraisEmpresa(tipoEmpresa, dono, nomeMercado, endereco);
-            if(sistemaUsuario.validaNome(tipoMercado)){
-                throw new TipoMercadoInvalidoException();
-            }
-            horarioFormato(abre, fecha);
-            horarioNull(abre, fecha);
-
-            horarioPadrao(abre, fecha);
-            verificaEmpresa(nomeMercado,dono,endereco);
-
-    }
-
     public int criarEmpresa(String tipoEmpresa, int dono, String nomeFarmacia, String endereco,  boolean aberto24Horarios, int numeroFuncionarios)
             throws UsuarioNaoCriaEmpresaException, EmpresaEnderecoInvalidoException, NomeInvalidoException,
             UsuarioNaoCadastradoException, TipoEmpresaInvalidoException, EmpresaNomeEnderecoEmUsoException,
             NumeroFuncionariosException, EmpresaNomeExisteException, ErroApagarArquivoException {
 
-        validaDadosFarmacia(tipoEmpresa, dono, nomeFarmacia, endereco, numeroFuncionarios);
+        dados.validaDadosFarmacia(tipoEmpresa, dono, nomeFarmacia, endereco, numeroFuncionarios);
         Farmacia farmacia = new Farmacia(dados.contadorIdEmpresa, dono, nomeFarmacia, endereco, aberto24Horarios, numeroFuncionarios);
         if(tipoEmpresa.matches("farmacia")){
             dados.empresasPorID.put(dados.contadorIdEmpresa, farmacia);
@@ -99,17 +81,7 @@ public class SistemaEmpresa {
         }
         return farmacia.getIdEmpresa();
     }
-    public void validaDadosFarmacia(String tipoEmpresa, int dono, String nomeFarmacia, String endereco, int numeroFuncionarios)
-            throws UsuarioNaoCadastradoException, UsuarioNaoCriaEmpresaException, TipoEmpresaInvalidoException,
-            NomeInvalidoException, EmpresaEnderecoInvalidoException, NumeroFuncionariosException,
-            EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException {
 
-        validaDadosGeraisEmpresa(tipoEmpresa, dono, nomeFarmacia, endereco);
-        if(numeroFuncionarios < 1){
-            throw new NumeroFuncionariosException();
-        }
-        verificaEmpresa(nomeFarmacia, dono, endereco);
-    }
 
     public String getEmpresasDoUsuario(int idDono) throws UsuarioNaoCriaEmpresaException {
         if(dados.usuariosPorID.get(idDono).getTipoObjeto().matches("cliente"))
@@ -153,7 +125,7 @@ public class SistemaEmpresa {
         if(!dados.usuariosPorID.containsKey(idDono)){
             throw new UsuarioNaoCadastradoException();
         }
-        if(sistemaUsuario.validaNome(nome)){
+        if(dados.validaNome(nome)){
             throw new NomeInvalidoException();
         }
 
@@ -197,7 +169,7 @@ public class SistemaEmpresa {
     }
     public String getAtributoEmpresa(int idEmpresa, String atributo) throws EmpresaNaoCadastradaException, AtributoInvalidoException {
         if(dados.empresasPorID.containsKey(idEmpresa)) {
-            if(sistemaUsuario.validaNome(atributo)) {
+            if(dados.validaNome(atributo)) {
                 throw new AtributoInvalidoException();
             }
 
@@ -228,9 +200,9 @@ public class SistemaEmpresa {
         if(!dados.empresasPorID.containsKey(idEmpresa)){
             throw new EmpresaNaoEncontradaException();
         }
-        horarioFormato(abre, fecha);
-        horarioNull(abre, fecha);
-        horarioPadrao(abre, fecha);
+        dados.horarioFormato(abre, fecha);
+        dados.horarioNull(abre, fecha);
+        dados.horarioPadrao(abre, fecha);
 
         Empresa empresa = dados.empresasPorID.get(idEmpresa);
         if(!empresa.getTipoEmpresa().matches("mercado")){
@@ -239,86 +211,5 @@ public class SistemaEmpresa {
         empresa.setAbre(abre);
         empresa.setFecha(fecha);
 
-    }
-
-    public void horarioFormato(String abre, String fecha) throws FormatoHoraInvalidoException{
-        if((abre != null && fecha != null) && (abre.isEmpty() || fecha.isEmpty() || !abre.matches("^\\d{2}:\\d{2}$") || !fecha.matches("^\\d{2}:\\d{2}$"))){
-            throw new FormatoHoraInvalidoException();
-        }
-
-    }
-    public void horarioNull(String abre, String fecha) throws HorarioInvalidoException {
-        if(abre == null || fecha == null ) {
-            throw new HorarioInvalidoException();
-        }
-
-    }
-    public void horarioPadrao(String abre, String fecha) throws HorarioInvalidoException {
-        int horaAbre = Integer.parseInt(abre.substring(0, 2));
-        int horaFecha = Integer.parseInt(fecha.substring(0, 2));
-        int minutoAbre = Integer.parseInt(abre.substring(3, 5));
-        int minutoFecha = Integer.parseInt(fecha.substring(3, 5));
-        int diferencaMinutos;
-        if (horaAbre > 23 || horaFecha > 23 || minutoAbre > 59 || minutoFecha > 59) {
-            throw new HorarioInvalidoException();
-        } else if (horaAbre < 0 || horaFecha < 0 || minutoAbre < 0 || minutoFecha < 0) {
-            throw new HorarioInvalidoException();
-        }
-
-
-        LocalTime inicio = LocalTime.of(horaAbre, minutoAbre);
-        LocalTime fim = LocalTime.of(horaFecha, minutoFecha);
-
-
-        Duration duracao = Duration.between(inicio, fim);
-        if (duracao.isNegative()) {
-            duracao = duracao.plusHours(24);
-        }
-        long horas = duracao.toHours();
-        long minutos = duracao.toMinutesPart();
-
-        diferencaMinutos = Math.toIntExact(horas) * 60 + Math.toIntExact(minutos);
-
-        if (diferencaMinutos < 360 || horaAbre > 12) {
-            throw new HorarioInvalidoException();
-        }
-    }
-    public void validaDadosGeraisEmpresa(String tipoEmpresa, int dono, String nomeEmpresa, String endereco)
-            throws UsuarioNaoCadastradoException, UsuarioNaoCriaEmpresaException, TipoEmpresaInvalidoException, NomeInvalidoException, EmpresaEnderecoInvalidoException {
-
-        if(!(dados.usuariosPorID.containsKey(dono))){
-            throw new UsuarioNaoCadastradoException();
-        }
-        else if(!dados.usuariosPorID.get(dono).getTipoObjeto().matches("donoEmpresa")){
-            throw new UsuarioNaoCriaEmpresaException();
-        }
-        else if(sistemaUsuario.validaNome(tipoEmpresa)){
-            throw new TipoEmpresaInvalidoException();
-        }
-        else if(sistemaUsuario.validaNome(nomeEmpresa)){
-            throw new NomeInvalidoException();
-        }
-        else if(sistemaUsuario.validaNome(endereco)){
-            throw new EmpresaEnderecoInvalidoException();
-        }
-    }
-    public void verificaEmpresa(String nome, int dono, String endereco) throws EmpresaNomeEnderecoEmUsoException, EmpresaNomeExisteException {
-        for (Empresa empresa : dados.empresasPorID.values())
-        {
-
-            if(empresa.getNomeEmpresa().matches(nome)){
-                if(empresa.getIdDono() == dono)
-                {
-                    if(empresa.getEnderecoEmpresa().matches(endereco))
-                    {
-                        throw new EmpresaNomeEnderecoEmUsoException();
-                    }
-                }
-                else
-                {
-                    throw new EmpresaNomeExisteException();
-                }
-            }
-        }
     }
 }

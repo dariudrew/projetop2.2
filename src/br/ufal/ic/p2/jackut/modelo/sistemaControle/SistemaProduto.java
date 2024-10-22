@@ -1,7 +1,16 @@
 package br.ufal.ic.p2.jackut.modelo.sistemaControle;
 
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.AtributoNaoExisteException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.ProdutoCategoriaInvalidaException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.ProdutoValorInvalidoExcepion;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.NomeInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.EmpresaNaoCadastradaException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.EmpresaNaoEncontradaException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.ProdutoNaoEncontradoException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.ProdutoJaExisteNaEmpresaException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.ProdutoNaoCadastradoException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.ErroApagarArquivoException;
 import br.ufal.ic.p2.jackut.modelo.produto.Produto;
-import br.ufal.ic.p2.jackut.modelo.exception.*;
 
 import java.util.Locale;
 
@@ -17,7 +26,7 @@ public class SistemaProduto {
             throws EmpresaNaoCadastradaException, NomeInvalidoException,
             ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoJaExisteNaEmpresaException, ErroApagarArquivoException {
 
-        validaDadosProduto(idEmpresa, nomeProduto, valorProduto, categoriaProduto);
+        dados.validaDadosProduto(idEmpresa, nomeProduto, valorProduto, categoriaProduto);
         Produto produto = new Produto(dados.contadorIdProduto, nomeProduto, valorProduto, categoriaProduto,idEmpresa);
         dados.produtosPorID.put(dados.contadorIdProduto, produto);
         dados.contadorIdProduto++;
@@ -28,13 +37,13 @@ public class SistemaProduto {
     public void editarProduto(int idProduto, String nomeProduto, float valorProduto, String categoriaProduto)
             throws NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoNaoCadastradoException {
 
-        if(sistemaUsuario.validaNome(nomeProduto)){
+        if(dados.validaNome(nomeProduto)){
             throw new NomeInvalidoException();
         }
         else if(valorProduto < 0){
             throw new ProdutoValorInvalidoExcepion();
         }
-        else if(sistemaUsuario.validaNome(categoriaProduto)){
+        else if(dados.validaNome(categoriaProduto)){
             throw new ProdutoCategoriaInvalidaException();
         }
         else if(!dados.produtosPorID.containsKey(idProduto)){
@@ -50,7 +59,7 @@ public class SistemaProduto {
     }
     public String getProduto(String  nomeProduto, int idEmpresa, String atributo)
             throws EmpresaNaoCadastradaException, NomeInvalidoException, AtributoNaoExisteException, ProdutoNaoEncontradoException {
-        if(sistemaUsuario.validaNome(nomeProduto)){
+        if(dados.validaNome(nomeProduto)){
             throw new NomeInvalidoException();
         }
         else if(!dados.empresasPorID.containsKey(idEmpresa)){
@@ -96,7 +105,6 @@ public class SistemaProduto {
 
         String produtosPorEmpresa = "";
 
-
         if(!dados.produtosPorID.isEmpty()){
             int qntProdutos = dados.produtosPorID.size();
             for(int i = 1; i <= qntProdutos; i++){
@@ -117,38 +125,13 @@ public class SistemaProduto {
                     produtosPorEmpresa = produtosPorEmpresa.concat("]}");
                 }
             }
-        }else{
+        }
+        else{
             produtosPorEmpresa = produtosPorEmpresa.concat("{[]}");
         }
 
 
         return produtosPorEmpresa;
     }
-    public void validaDadosProduto(int idEmpresa, String nomeProduto, float valorProduto, String categoriaProduto)
-            throws EmpresaNaoCadastradaException, NomeInvalidoException, ProdutoValorInvalidoExcepion,
-            ProdutoCategoriaInvalidaException, ProdutoJaExisteNaEmpresaException {
 
-        if(!dados.empresasPorID.containsKey(idEmpresa)){
-            throw new EmpresaNaoCadastradaException();
-        }
-        if(sistemaUsuario.validaNome(nomeProduto)){
-            throw new NomeInvalidoException();
-        }
-        if(sistemaUsuario.validaNome(categoriaProduto)){
-            throw new ProdutoCategoriaInvalidaException();
-        }
-        if(valorProduto <= 0){
-            throw new ProdutoValorInvalidoExcepion();
-        }
-
-        if(!dados.produtosPorID.isEmpty()){
-            for(Produto produto: dados.produtosPorID.values()){
-                if(produto.getNomeProduto().matches(nomeProduto) && produto.getIdEmpresa() == idEmpresa){
-                    if(nomeProduto.matches("Refrigerante"))                    {
-                        throw new ProdutoJaExisteNaEmpresaException();
-                    }
-                }
-            }
-        }
-    }
 }

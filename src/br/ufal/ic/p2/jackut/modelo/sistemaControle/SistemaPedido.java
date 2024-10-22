@@ -1,7 +1,21 @@
 package br.ufal.ic.p2.jackut.modelo.sistemaControle;
 
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.AtributoInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.AtributoNaoExisteException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.ProdutoInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.NomeInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.EmpresaNaoCadastradaException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.NaoExistePedidoAbertoException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.PedidoNaoEncontradoException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.ProdutoNaoEncontradoException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.DonoNaoFazPedidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.NaoPermitidoPedidosAbertoMesmaEmpresaException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.UsuarioNaoCadastradoException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.ErroApagarArquivoException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.NaoPossivelRemoverProdutoException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.PedidoFechadoException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.ProdutoNaoPerteceEmpresaException;
 import br.ufal.ic.p2.jackut.modelo.produto.Produto;
-import br.ufal.ic.p2.jackut.modelo.exception.*;
 import br.ufal.ic.p2.jackut.modelo.pedido.Pedido;
 
 import java.util.Locale;
@@ -24,7 +38,7 @@ public class SistemaPedido {
             throws EmpresaNaoCadastradaException, DonoNaoFazPedidoException, UsuarioNaoCadastradoException,
             AtributoInvalidoException, NaoPermitidoPedidosAbertoMesmaEmpresaException, ErroApagarArquivoException {
 
-        validaDadosPedido(idCliente, idEmpresa);
+        dados.validaDadosPedido(idCliente, idEmpresa);
         String nomeCliente = sistemaUsuario.getAtributoUsuario(idCliente, "nome");
         String nomeEmpresa = sistemaEmpresa.getAtributoEmpresa(idEmpresa, "nome");
         Pedido pedido = new Pedido(dados.contadorIdPedido, nomeCliente, nomeEmpresa, "aberto", idCliente, idEmpresa);
@@ -34,34 +48,9 @@ public class SistemaPedido {
         return pedido.getNumeroPedido(); //numero do pedido
     }
 
-    public void validaDadosPedido(int idCliente, int idEmpresa)
-            throws UsuarioNaoCadastradoException, EmpresaNaoCadastradaException, DonoNaoFazPedidoException,
-            NaoPermitidoPedidosAbertoMesmaEmpresaException {
 
-        if(!dados.usuariosPorID.containsKey(idCliente)){
-            throw new UsuarioNaoCadastradoException();
-        }
-        if(!dados.empresasPorID.containsKey(idEmpresa)){
-            throw new EmpresaNaoCadastradaException();
-        }
-        if(!dados.usuariosPorID.get(idCliente).getTipoObjeto().matches("cliente")){
-            throw new DonoNaoFazPedidoException();
-        }
-
-        for(Pedido pedido: dados.pedidosPorID.values()){//
-
-            if(pedido.getIdCliente() == idCliente && pedido.getIdEmpresa() == idEmpresa){
-
-                if(pedido.getEstadoPedido().equals("aberto")){
-                    throw new NaoPermitidoPedidosAbertoMesmaEmpresaException();
-                }
-
-            }
-        }
-    }
 
     public int getNumeroPedido(int idCliente, int idEmpresa, int indice) throws PedidoNaoEncontradoException {
-
 
         int qntPedidos = dados.pedidosPorID.size();
         int numeroPedido = 0;
@@ -82,12 +71,11 @@ public class SistemaPedido {
         {
             throw new PedidoNaoEncontradoException();
         }
-
         return numeroPedido;
     }
 
     public void adicionarProduto(int numeroPedido, int idProduto)
-            throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException{
+            throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException {
 
         if(!dados.pedidosPorID.containsKey(numeroPedido)){
             throw new NaoExistePedidoAbertoException();
@@ -118,7 +106,6 @@ public class SistemaPedido {
         else{
             throw new ProdutoNaoPerteceEmpresaException();
         }
-
     }
 
     public String getPedidos(int numeroPedido, String atributo)
@@ -127,7 +114,7 @@ public class SistemaPedido {
         if(!dados.pedidosPorID.containsKey(numeroPedido)){
             throw new PedidoNaoEncontradoException();
         }
-        else if(sistemaUsuario.validaNome(atributo)){
+        else if(dados.validaNome(atributo)){
             throw new AtributoInvalidoException();
         }
         Pedido pedido = dados.pedidosPorID.get(numeroPedido);
@@ -156,40 +143,18 @@ public class SistemaPedido {
 
         if (!dados.pedidosPorID.containsKey(numeroPedido)) {
             throw new PedidoNaoEncontradoException();
-        } else if (sistemaUsuario.validaNome(produto)) {
+        } else if (dados.validaNome(produto)) {
             throw new ProdutoInvalidoException();
         }
 
-
         Pedido pedido = dados.pedidosPorID.get(numeroPedido);
-        String produtosDoPedido = getStringProdutos(produto, pedido);
+        String produtosDoPedido = SistemaDados.getStringProdutos(produto, pedido);
 
         pedido.setProdutos(produtosDoPedido);
         String valorProduto = sistemaProduto.getProduto(produto, pedido.getIdEmpresa(), "valor");
         float valorP = Float.parseFloat(valorProduto);
         pedido.setValorPedido(-valorP);
-
-
     }
 
-    private static String getStringProdutos(String produto, Pedido pedido) throws NaoPossivelRemoverProdutoException, ProdutoNaoEncontradoException {
-        String produtosDoPedido = pedido.getProdutos();
 
-        if (!(pedido.getEstadoPedido().equals("aberto"))) {
-            throw new NaoPossivelRemoverProdutoException();
-        } else if (!pedido.getProdutos().contains(produto)) {
-            throw new ProdutoNaoEncontradoException();
-        }
-
-        if (produtosDoPedido.contains(", " + produto + ",")) {
-            produtosDoPedido = produtosDoPedido.replaceFirst(", " + produto, "");
-        } else if (produtosDoPedido.contains("[" + produto + ",")) {
-            produtosDoPedido = produtosDoPedido.replaceFirst(produto + ", ", "");
-        } else if (produtosDoPedido.contains("[" + produto)) {
-            produtosDoPedido = produtosDoPedido.replaceFirst(produto, "");
-        } else if (produtosDoPedido.contains(", " + produto + "]")) {
-            produtosDoPedido = produtosDoPedido.replaceFirst(", " + produto, "");
-        }
-        return produtosDoPedido;
-    }
 }

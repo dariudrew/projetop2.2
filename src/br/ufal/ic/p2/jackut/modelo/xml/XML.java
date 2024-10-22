@@ -1,7 +1,7 @@
 package br.ufal.ic.p2.jackut.modelo.xml;
 
 import br.ufal.ic.p2.jackut.modelo.entrega.Entrega;
-import br.ufal.ic.p2.jackut.modelo.exception.ErroApagarArquivoException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.ErroApagarArquivoException;
 import br.ufal.ic.p2.jackut.modelo.pedido.Pedido;
 import br.ufal.ic.p2.jackut.modelo.produto.Produto;
 import br.ufal.ic.p2.jackut.modelo.usuario.DonoEmpresa;

@@ -1,11 +1,20 @@
 package br.ufal.ic.p2.jackut.modelo.sistemaControle;
 
 
-import br.ufal.ic.p2.jackut.modelo.xml.XML;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.*;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.NomeInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.NomeVeiculoInvalidoException;
 import br.ufal.ic.p2.jackut.modelo.empresa.Empresa;
-import br.ufal.ic.p2.jackut.modelo.exception.*;
 
 
+import br.ufal.ic.p2.jackut.modelo.exception.busca.EmpresaNaoCadastradaException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.EmpresaNaoEncontradaException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.PlacaInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.UsuarioNaoCadastradoException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.ErroApagarArquivoException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.FormatoPlacaException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.LoginSenhaException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.UsuarioNaoEntregadorException;
 import br.ufal.ic.p2.jackut.modelo.usuario.Cliente;
 import br.ufal.ic.p2.jackut.modelo.usuario.DonoEmpresa;
 import br.ufal.ic.p2.jackut.modelo.usuario.Entregador;
@@ -18,49 +27,18 @@ import java.lang.reflect.Method;
 public class SistemaUsuario {
     private final SistemaDados dados;
 
+
   public SistemaUsuario(SistemaDados dados){
       this.dados = dados;
       dados.xml.criarXML();
   }
 
-    public void zerarSistema(){
 
-        while(dados.contadorID > 0 || dados.contadorIdEmpresa > 0){
-            dados.contadorID--;
-            dados.contadorIdEmpresa--;
-            dados.contadorIdProduto--;
-            dados.contadorIdPedido--;
-            dados.contadorIdEntrega--;
-
-            if(dados.contadorID > 0){
-                dados.usuariosPorID.remove(dados.contadorID);
-            }
-            if(dados.contadorIdEmpresa > 0){
-                dados.empresasPorID.remove(dados.contadorIdEmpresa);
-            }
-            if(dados.contadorIdProduto > 0){
-                dados.produtosPorID.remove(dados.contadorIdProduto);
-            }
-            if(dados.contadorIdPedido > 0){
-                dados.pedidosPorID.remove(dados.contadorIdPedido);
-            }
-            if(dados.contadorIdEntrega > 0){
-                dados.entregasPorID.remove(dados.contadorIdEntrega);
-            }
-
-        }
-        dados.contadorID = 1;
-        dados.contadorIdEmpresa = 1;
-        dados.contadorIdProduto = 1;
-        dados.contadorIdPedido = 1;
-        dados.contadorIdEntrega = 1;
-        dados.xml.apagarXML();
-    }
 
     public void criarUsuario(String nome, String email, String senha, String endereco)
             throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, AtributoNaoExisteException, ErroApagarArquivoException {
 
-        validaDados(nome, email, senha, endereco);
+        dados.validaDados(nome, email, senha, endereco);
         if(getIdUsuario("Email", email) > 0){
             throw new EmailJaExisteException();
         }
@@ -72,8 +50,8 @@ public class SistemaUsuario {
     }
     public void criarUsuario(String nome, String email, String senha, String endereco, String cpf)
             throws NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, EmailJaExisteException, CPFInvalidoException, AtributoNaoExisteException, ErroApagarArquivoException {
-        validaCPF(cpf);
-        validaDados(nome, email, senha, endereco);
+        dados.validaCPF(cpf);
+        dados.validaDados(nome, email, senha, endereco);
         if(getIdUsuario("Email", email) > 0){
             throw new EmailJaExisteException();
         }
@@ -84,11 +62,11 @@ public class SistemaUsuario {
         dados.contadorID+=1;
     }
     public void criarUsuario(String nome, String email, String senha, String endereco, String veiculo, String placa) throws EmailJaExisteException, NomeInvalidoException, EmailInvalidoException, EnderecoInvalidoException, SenhaInvalidaException, NomeVeiculoInvalidoException, PlacaInvalidoException, FormatoPlacaException, AtributoNaoExisteException {
-        validaDados(nome, email, senha, endereco);
-        if(validaNome(veiculo)){
+        dados.validaDados(nome, email, senha, endereco);
+        if(dados.validaNome(veiculo)){
             throw new NomeVeiculoInvalidoException();
         }
-        else if(validaNome(placa) || getIdUsuario("Placa", placa) > 0){
+        else if(dados.validaNome(placa) || getIdUsuario("Placa", placa) > 0){
             throw new PlacaInvalidoException();
         }
 
@@ -101,37 +79,9 @@ public class SistemaUsuario {
         dados.contadorID++;
     }
 
-    public void validaDados(String nome, String email, String senha, String endereco)
-            throws NomeInvalidoException, EmailInvalidoException, SenhaInvalidaException, EnderecoInvalidoException{
-        if(validaNome(nome)){
-            throw new NomeInvalidoException();
-        }
-        if(validaSenha(senha)){
-            throw new SenhaInvalidaException();
-        }
-        if(validaEndereco(endereco)){
-            throw new EnderecoInvalidoException();
-        }
-        if(validaEmail(email)){
-            throw new EmailInvalidoException();
-        }
 
 
-    }
 
-    public void validaCPF(String cpf) throws CPFInvalidoException{
-        if(cpf == null || cpf.isEmpty() || !cpf.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$")){
-            throw new CPFInvalidoException();
-        }
-    }
-
-    public boolean validaEmail(String email) {
-        return email == null || email.isEmpty() || !email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
-    }
-
-    public boolean validaNome(String nome){
-        return nome == null || nome.isEmpty() || nome.isBlank();
-    }
 
     public int getIdUsuario(String tipoMetodo, String atributo) throws AtributoNaoExisteException {
         try {
@@ -154,15 +104,9 @@ public class SistemaUsuario {
         return 0;
     }
 
-    public boolean validaSenha(String senha) {
-        return senha == null || senha.trim().isEmpty();
-    }
 
-    public boolean validaEndereco(String endereco){
-        return endereco == null || endereco.trim().isEmpty();
-    }
 
-    public String getAtributoUsuario(int id, String atributo) throws UsuarioNaoCadastradoException{
+    public String getAtributoUsuario(int id, String atributo) throws UsuarioNaoCadastradoException {
 
         if(dados.usuariosPorID.containsKey(id)){
 
@@ -192,7 +136,7 @@ public class SistemaUsuario {
 
     public int login (String email, String senha) throws LoginSenhaException, AtributoNaoExisteException {
 
-        if(validaEmail(email) || validaSenha(senha)){
+        if(dados.validaEmail(email) || dados.validaSenha(senha)){
             throw new LoginSenhaException();
         }
         else{

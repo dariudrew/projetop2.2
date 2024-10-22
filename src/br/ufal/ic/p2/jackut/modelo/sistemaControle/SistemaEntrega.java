@@ -2,7 +2,12 @@ package br.ufal.ic.p2.jackut.modelo.sistemaControle;
 
 import br.ufal.ic.p2.jackut.modelo.empresa.Empresa;
 import br.ufal.ic.p2.jackut.modelo.entrega.Entrega;
-import br.ufal.ic.p2.jackut.modelo.exception.*;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.AtributoInvalidoException;
+import br.ufal.ic.p2.jackut.modelo.exception.atributo.AtributoNaoExisteException;
+import br.ufal.ic.p2.jackut.modelo.exception.busca.*;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.EntregadorSemEmpresaException;
+import br.ufal.ic.p2.jackut.modelo.exception.cadastro.UsuarioNaoCadastradoException;
+import br.ufal.ic.p2.jackut.modelo.exception.verificacao.*;
 import br.ufal.ic.p2.jackut.modelo.pedido.Pedido;
 import br.ufal.ic.p2.jackut.modelo.usuario.Usuario;
 
@@ -46,7 +51,7 @@ public class SistemaEntrega {
         String produtos = p.getProdutos();
         p.setEstadoPedido("entregando");
 
-        if(sistemaUsuario.validaNome(destino)){
+        if(dados.validaNome(destino)){
             destino = sistemaUsuario.getAtributoUsuario(p.getIdCliente(), "endereco");
         }
 
@@ -130,7 +135,7 @@ public class SistemaEntrega {
 
     public String getEntrega(int idEntrega, String atributo) throws AtributoInvalidoException, EntregaNaoEncontradaException, AtributoNaoExisteException {
 
-        if(sistemaUsuario.validaNome(atributo)){
+        if(dados.validaNome(atributo)){
             throw new AtributoInvalidoException();
         }
         if(!dados.entregasPorID.isEmpty() && !dados.entregasPorID.containsKey(idEntrega)){
@@ -157,7 +162,7 @@ public class SistemaEntrega {
         }
     }
 
-    public int getIdEntrega(int idPedido) throws NaoExisteEntregaIdException, NaoExisteNadaEntregaException{
+    public int getIdEntrega(int idPedido) throws NaoExisteEntregaIdException, NaoExisteNadaEntregaException {
        if(dados.pedidosPorID == null || !dados.pedidosPorID.containsKey(idPedido)){
             throw new NaoExisteNadaEntregaException();
         }
