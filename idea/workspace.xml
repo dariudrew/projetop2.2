@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="94e99283-741a-4ca2-8623-4f09f66ab1d3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/XML.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/Facade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/Facade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/empresa/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/empresa/Empresa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/empresa/Farmacia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/empresa/Farmacia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/empresa/Mercado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/empresa/Mercado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/empresa/Restaurante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/empresa/Restaurante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/entrega/Entrega.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/entrega/Entrega.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/AtributoInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/AtributoInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/AtributoNaoExisteException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/AtributoNaoExisteException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/CPFInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/CPFInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmailInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmailInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmailJaExisteException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmailJaExisteException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaEnderecoInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaEnderecoInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaNomeEnderecoEmUsoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaNomeEnderecoEmUsoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaNomeExisteException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaNomeExisteException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaNomeInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaNomeInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaTipoCozinhaInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EmpresaTipoCozinhaInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EnderecoInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/EnderecoInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/FormatoHoraInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/FormatoHoraInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/HorarioInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/HorarioInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/IndiceInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/IndiceInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/IndiceMaiorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/IndiceMaiorException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/NomeInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/NomeInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/NomeVeiculoInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/NomeVeiculoInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/ProdutoCategoriaInvalidaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/ProdutoCategoriaInvalidaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/ProdutoInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/ProdutoInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/ProdutoValorInvalidoExcepion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/ProdutoValorInvalidoExcepion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/SenhaInvalidaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/SenhaInvalidaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/TipoEmpresaInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/TipoEmpresaInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/TipoMercadoInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/atributo/TipoMercadoInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/EmpresaNaoCadastradaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/EmpresaNaoCadastradaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/EmpresaNaoEncontradaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/EmpresaNaoEncontradaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/EntregaNaoEncontradaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/EntregaNaoEncontradaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/EntregadorEmEntregaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/EntregadorEmEntregaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExisteEmpresaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExisteEmpresaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExisteEntregaIdException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExisteEntregaIdException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExisteNadaEntregaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExisteNadaEntregaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExistePedidoAbertoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExistePedidoAbertoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExistePedidoEntregaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/NaoExistePedidoEntregaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/PedidoNaoEncontradoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/PedidoNaoEncontradoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/ProdutoNaoEncontradoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/busca/ProdutoNaoEncontradoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/DonoNaoFazPedidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/DonoNaoFazPedidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/EntregadorSemEmpresaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/EntregadorSemEmpresaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/NaoMercadoValidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/NaoMercadoValidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/NaoPermitidoPedidosAbertoMesmaEmpresaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/NaoPermitidoPedidosAbertoMesmaEmpresaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/NumeroFuncionariosException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/NumeroFuncionariosException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/PlacaInvalidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/PlacaInvalidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/ProdutoJaExisteNaEmpresaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/ProdutoJaExisteNaEmpresaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/ProdutoNaoCadastradoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/ProdutoNaoCadastradoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/UsuarioNaoCadastradoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/UsuarioNaoCadastradoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/UsuarioNaoCriaEmpresaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/cadastro/UsuarioNaoCriaEmpresaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/ErroApagarArquivoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/ErroApagarArquivoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/FormatoPlacaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/FormatoPlacaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/LoginSenhaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/LoginSenhaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/NaoPossivelLiberarPedidoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/NaoPossivelLiberarPedidoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/NaoPossivelRemoverProdutoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/NaoPossivelRemoverProdutoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/PedidoFechadoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/PedidoFechadoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/PedidoLiberadoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/PedidoLiberadoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/PedidoNaoProntoException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/PedidoNaoProntoException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/ProdutoNaoPerteceEmpresaException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/ProdutoNaoPerteceEmpresaException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/UsuarioNaoEntregadorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/exception/verificacao/UsuarioNaoEntregadorException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/pedido/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/pedido/Pedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/produto/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/produto/Produto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaDados.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaDados.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaEmpresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaEmpresa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaEntrega.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaEntrega.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaPedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaPedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaProduto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaProduto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/sistemaControle/SistemaUsuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/usuario/DonoEmpresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/usuario/DonoEmpresa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/usuario/Entregador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/usuario/Entregador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/usuario/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/usuario/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/xml/XML.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/modelo/xml/XML.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/us6_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/us6_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/us7_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/us7_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/us8_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/us8_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/us8_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/us8_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/us8_2.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2U7B5uHHhbpjjwEmSzzFS1wZZ52" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/dariu/Downloads/P2-2023.1-JACKUT&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/hozan/IdeaProjects/P2-2023.1-JACKUT/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="br.ufal.ic.p2.jackut.modelo.exception" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dariu\Downloads\P2-2023.1-JACKUT\src\br\ufal\ic\p2\jackut" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hozan\IdeaProjects\P2-2023.1-JACKUT\tests" />
+      <recent name="C:\Users\hozan\IdeaProjects\P2-2023.1-JACKUT\src" />
+      <recent name="C:\Users\hozan\IdeaProjects\P2-2023.1-JACKUT\lib" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="br.ufal.ic.p2.jackut.modelo.usuario" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="P2-2023.1-JACKUT" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="94e99283-741a-4ca2-8623-4f09f66ab1d3" name="Changes" comment="" />
+      <created>1692280562246</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1692280562246</updated>
+      <workItem from="1692280563413" duration="2755000" />
+      <workItem from="1726423959236" duration="5040000" />
+      <workItem from="1726460046972" duration="3549000" />
+      <workItem from="1726472086300" duration="1142000" />
+      <workItem from="1726473834365" duration="832000" />
+      <workItem from="1726529738878" duration="6311000" />
+      <workItem from="1726543029942" duration="6157000" />
+      <workItem from="1726618161296" duration="13227000" />
+      <workItem from="1726707028781" duration="2428000" />
+      <workItem from="1726792188993" duration="7647000" />
+      <workItem from="1726806680732" duration="3422000" />
+      <workItem from="1726897625488" duration="3040000" />
+      <workItem from="1726977606156" duration="4059000" />
+      <workItem from="1726986456631" duration="2367000" />
+      <workItem from="1727148579256" duration="8110000" />
+      <workItem from="1727235544367" duration="17943000" />
+      <workItem from="1727465007259" duration="482000" />
+      <workItem from="1727467434768" duration="15700000" />
+      <workItem from="1727551707030" duration="6048000" />
+      <workItem from="1727588468145" duration="10290000" />
+      <workItem from="1727721292063" duration="7737000" />
+      <workItem from="1727769315745" duration="14239000" />
+      <workItem from="1727827823126" duration="18006000" />
+      <workItem from="1727927430746" duration="13656000" />
+      <workItem from="1728015284007" duration="12000" />
+      <workItem from="1728034265560" duration="490000" />
+      <workItem from="1728629827132" duration="8264000" />
+      <workItem from="1728793775470" duration="6176000" />
+      <workItem from="1728877085130" duration="1169000" />
+      <workItem from="1728878362493" duration="1662000" />
+      <workItem from="1728880092802" duration="7062000" />
+      <workItem from="1728965125600" duration="6611000" />
+      <workItem from="1729039490532" duration="30657000" />
+      <workItem from="1729110978358" duration="26544000" />
+      <workItem from="1729183574991" duration="11000" />
+      <workItem from="1729194332464" duration="15457000" />
+      <workItem from="1729211384689" duration="6753000" />
+      <workItem from="1729225296967" duration="4964000" />
+      <workItem from="1729260415832" duration="24971000" />
+      <workItem from="1729308781787" duration="6086000" />
+      <workItem from="1729343649831" duration="13022000" />
+      <workItem from="1729626158961" duration="8631000" />
+      <workItem from="1729635517966" duration="6690000" />
+      <workItem from="1729737469859" duration="3073000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
