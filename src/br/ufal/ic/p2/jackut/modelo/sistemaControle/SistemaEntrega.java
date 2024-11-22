@@ -50,6 +50,7 @@ public class SistemaEntrega {
         String nomeEmpresa = p.getNomeEmpresa();
         String produtos = p.getProdutos();
         p.setEstadoPedido("entregando");
+        dados.xml.editarPedido(p);
 
         if(dados.validaNome(destino)){
             destino = sistemaUsuario.getAtributoUsuario(p.getIdCliente(), "endereco");
@@ -62,7 +63,7 @@ public class SistemaEntrega {
         return entrega.getIdEntrega();
     }
 
-    public void liberarPedido(int numero) throws PedidoNaoEncontradoException, PedidoLiberadoException, NaoPossivelLiberarPedidoException {
+    public void liberarPedido(int numero) throws PedidoNaoEncontradoException, PedidoLiberadoException, NaoPossivelLiberarPedidoException, ErroApagarArquivoException {
         if(dados.pedidosPorID.isEmpty() || !dados.pedidosPorID.containsKey(numero)){
             throw new PedidoNaoEncontradoException();
         }
@@ -75,6 +76,7 @@ public class SistemaEntrega {
         }
 
             pedido.setEstadoPedido("pronto");
+            dados.xml.editarPedido(pedido);
     }
 
     public int obterPedido(int idEntregador) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException,
@@ -183,13 +185,14 @@ public class SistemaEntrega {
     }
 
 
-    public void entregar(int idEntrega) throws NaoExisteNadaEntregaException {
+    public void entregar(int idEntrega) throws NaoExisteNadaEntregaException, ErroApagarArquivoException {
         if (!dados.entregasPorID.containsKey(idEntrega)) {
             throw new NaoExisteNadaEntregaException();
         }
         Entrega entrega = dados.entregasPorID.get(idEntrega);
         Pedido pedido = dados.pedidosPorID.get(entrega.getIdPedido());
         pedido.setEstadoPedido("entregue");
+        dados.xml.editarPedido(pedido);
     }
 
 }

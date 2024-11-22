@@ -7,10 +7,29 @@ import br.ufal.ic.p2.jackut.modelo.exception.cadastro.*;
 import br.ufal.ic.p2.jackut.modelo.exception.verificacao.NaoPossivelRemoverProdutoException;
 import br.ufal.ic.p2.jackut.modelo.xml.XML;
 import br.ufal.ic.p2.jackut.modelo.empresa.Empresa;
+import br.ufal.ic.p2.jackut.modelo.empresa.Farmacia;
+import br.ufal.ic.p2.jackut.modelo.empresa.Mercado;
+import br.ufal.ic.p2.jackut.modelo.empresa.Restaurante;
 import br.ufal.ic.p2.jackut.modelo.entrega.Entrega;
 import br.ufal.ic.p2.jackut.modelo.produto.Produto;
 import br.ufal.ic.p2.jackut.modelo.pedido.Pedido;
+import br.ufal.ic.p2.jackut.modelo.usuario.Cliente;
+import br.ufal.ic.p2.jackut.modelo.usuario.DonoEmpresa;
+import br.ufal.ic.p2.jackut.modelo.usuario.Entregador;
 import br.ufal.ic.p2.jackut.modelo.usuario.Usuario;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -34,38 +53,18 @@ public class SistemaDados {
 
     public void zerarSistema(){
 
-        while(contadorID > 0 || contadorIdEmpresa > 0 || contadorIdEntrega > 0 ||
-                contadorIdProduto > 0 || contadorIdPedido > 0){
-
-            contadorID--;
-            contadorIdEmpresa--;
-            contadorIdProduto--;
-            contadorIdPedido--;
-            contadorIdEntrega--;
-
-            if(contadorID > 0){
-                usuariosPorID.remove(contadorID);
-            }
-            if(contadorIdEmpresa > 0){
-                empresasPorID.remove(contadorIdEmpresa);
-            }
-            if(contadorIdProduto > 0){
-                produtosPorID.remove(contadorIdProduto);
-            }
-            if(contadorIdPedido > 0){
-                pedidosPorID.remove(contadorIdPedido);
-            }
-            if(contadorIdEntrega > 0){
-                entregasPorID.remove(contadorIdEntrega);
-            }
-
-        }
-        contadorID = 1;
-        contadorIdEmpresa = 1;
-        contadorIdProduto = 1;
-        contadorIdPedido = 1;
-        contadorIdEntrega = 1;
-        xml.apagarXML();
+       empresasPorID.clear();
+       usuariosPorID.clear();
+       produtosPorID.clear();
+       pedidosPorID.clear();
+       entregasPorID.clear();
+       
+       contadorID = 1;
+       contadorIdEmpresa = 1;
+       contadorIdProduto = 1;
+       contadorIdPedido = 1;
+       contadorIdEntrega = 1;
+       xml.apagarXML();
     }
 
     protected void validaDados(String nome, String email, String senha, String endereco)
@@ -296,6 +295,176 @@ public class SistemaDados {
         }
         return produtosDoPedido;
     }
+
+    // CARREGAR MAPS
+
+
+
+    public void carregarTodosDados() {
+        carregarUsuariosDoXML();
+        carregarEmpresasDoXML();
+        carregarProdutosDoXML();
+        carregarPedidosDoXML();
+        carregarEntregasDoXML();
+    }
+
+    private void carregarUsuariosDoXML() {
+    Document document = xml.carregarOuCriarXML();
+    if (document != null) {
+        NodeList usuarioNodes = document.getElementsByTagName("usuario");
+
+        for (int i = 0; i < usuarioNodes.getLength(); i++) {
+            Element usuarioElement = (Element) usuarioNodes.item(i);
+
+            int id = Integer.parseInt(usuarioElement.getAttribute("id"));
+            String nome = usuarioElement.getElementsByTagName("nome").item(0).getTextContent();
+            String email = usuarioElement.getElementsByTagName("email").item(0).getTextContent();
+            String senha = usuarioElement.getElementsByTagName("senha").item(0).getTextContent();
+            String endereco = usuarioElement.getElementsByTagName("endereco").item(0).getTextContent();
+
+            Usuario usuario;
+            // Verifica se o usuário é DonoEmpresa (tem CPF)
+            if (usuarioElement.getElementsByTagName("cpf").getLength() > 0) {
+                String cpf = usuarioElement.getElementsByTagName("cpf").item(0).getTextContent();
+                usuario = new DonoEmpresa(id, nome, email, senha, endereco, cpf);
+            } 
+            else if (usuarioElement.getElementsByTagName("veiculo").getLength() > 0){
+            
+                String veiculo = usuarioElement.getElementsByTagName("veiculo").item(0).getTextContent();
+                String placa = usuarioElement.getElementsByTagName("placa").item(0).getTextContent();
+                usuario = new Entregador(id, nome, email, senha, endereco, veiculo, placa);
+            }
+            else{
+                usuario = new Cliente(id, nome, email, senha, endereco);
+            }
+
+            // Adiciona no mapa de usuários
+            usuariosPorID.put(id, usuario);
+        }
+    }
+}
+
+public void carregarEmpresasDoXML() {
+    Document document = xml.carregarOuCriarXML();
+    if (document != null) {
+        NodeList empresaNodes = document.getElementsByTagName("empresa");
+
+        for (int i = 0; i < empresaNodes.getLength(); i++) {
+            Element empresaElement = (Element) empresaNodes.item(i);
+
+            int id = Integer.parseInt(empresaElement.getAttribute("id"));
+            int idDono = Integer.parseInt(empresaElement.getElementsByTagName("idDono").item(0).getTextContent());
+            String nome = empresaElement.getElementsByTagName("nome").item(0).getTextContent();
+            String endereco = empresaElement.getElementsByTagName("endereco").item(0).getTextContent();
+            String entregadoresVinculados = empresaElement.getElementsByTagName("entregadoresVinculados").item(0).getTextContent();
+
+            Empresa empresa;
+
+            // Verifica o tipo de empresa
+            if (empresaElement.getElementsByTagName("tipoCozinha").getLength() > 0) {
+                String tipoCozinha = empresaElement.getElementsByTagName("tipoCozinha").item(0).getTextContent();
+                empresa = new Restaurante(id, idDono, nome, endereco, tipoCozinha);
+                empresa.setEntregadoresVinculados(entregadoresVinculados);
+            } else if (empresaElement.getElementsByTagName("tipoMercado").getLength() > 0) {
+                String abre = empresaElement.getElementsByTagName("abre").item(0).getTextContent();
+                String fecha = empresaElement.getElementsByTagName("fecha").item(0).getTextContent();
+                String tipoMercado = empresaElement.getElementsByTagName("tipoMercado").item(0).getTextContent();
+                empresa = new Mercado(id, idDono, nome, endereco, abre, fecha, tipoMercado);
+                empresa.setEntregadoresVinculados(entregadoresVinculados);
+
+            } else if (empresaElement.getElementsByTagName("aberto24Horas").getLength() > 0) {
+                boolean aberto24Horas = Boolean.parseBoolean(empresaElement.getElementsByTagName("aberto24Horas").item(0).getTextContent());
+                int numeroFuncionarios = Integer.parseInt(empresaElement.getElementsByTagName("numeroFuncionarios").item(0).getTextContent());
+                empresa = new Farmacia(id, idDono, nome, endereco, aberto24Horas, numeroFuncionarios);
+                empresa.setEntregadoresVinculados(entregadoresVinculados);
+
+            } else {
+                // Caso não tenha nenhum tipo válido, assume uma empresa genérica
+                empresa = new Empresa(id, idDono, nome, endereco);
+                
+            }
+
+            // Adiciona no mapa de empresas
+            empresasPorID.put(id, empresa);
+        }
+    }
+}
+
+
+private void carregarProdutosDoXML() {
+    Document document = xml.carregarOuCriarXML();
+    if (document != null) {
+        NodeList produtoNodes = document.getElementsByTagName("produto");
+
+        for (int i = 0; i < produtoNodes.getLength(); i++) {
+            Element produtoElement = (Element) produtoNodes.item(i);
+
+            int id = Integer.parseInt(produtoElement.getAttribute("id"));
+            String nome = produtoElement.getElementsByTagName("nome").item(0).getTextContent();
+            int idEmpresa = Integer.parseInt(produtoElement.getElementsByTagName("idEmpresa").item(0).getTextContent());
+            Float preco = Float.parseFloat(produtoElement.getElementsByTagName("preco").item(0).getTextContent());
+            String categoria = produtoElement.getElementsByTagName("descricao").item(0).getTextContent();
+
+            Produto produto = new Produto(id, nome, preco, categoria, idEmpresa);
+
+            // Adiciona no mapa de produtos
+            produtosPorID.put(id, produto);
+        }
+    }
+}
+
+
+private void carregarPedidosDoXML() {
+    Document document = xml.carregarOuCriarXML();
+    if (document != null) {
+        NodeList pedidoNodes = document.getElementsByTagName("pedido");
+
+        for (int i = 0; i < pedidoNodes.getLength(); i++) {
+            Element pedidoElement = (Element) pedidoNodes.item(i);
+
+            int id = Integer.parseInt(pedidoElement.getAttribute("id"));
+            int idCliente = Integer.parseInt(pedidoElement.getElementsByTagName("idCliente").item(0).getTextContent());
+            int idEmpresa = Integer.parseInt(pedidoElement.getElementsByTagName("idEmpresa").item(0).getTextContent());
+            String nomeCliente = pedidoElement.getElementsByTagName("nomeCliente").item(0).getTextContent();
+            String nomeEmpresa = pedidoElement.getElementsByTagName("nomeEmpresa").item(0).getTextContent();
+            String estadoPedido = pedidoElement.getElementsByTagName("estadoPedido").item(0).getTextContent();
+            String produtos = pedidoElement.getElementsByTagName("produtos").item(0).getTextContent();
+            float valorPedido = Float.parseFloat(pedidoElement.getElementsByTagName("valorPedido").item(0).getTextContent());
+
+            Pedido pedido = new Pedido(id, nomeCliente, nomeEmpresa, estadoPedido, idCliente, idEmpresa);
+            pedido.setProdutos(produtos);
+            pedido.setValorPedido(valorPedido);
+            // Adiciona no mapa de pedidos
+            pedidosPorID.put(id, pedido);
+        }
+    }
+}
+
+
+private void carregarEntregasDoXML() {
+    Document document = xml.carregarOuCriarXML();
+    if (document != null) {
+        NodeList entregaNodes = document.getElementsByTagName("entrega");
+
+        for (int i = 0; i < entregaNodes.getLength(); i++) {
+            Element entregaElement = (Element) entregaNodes.item(i);
+
+            int id = Integer.parseInt(entregaElement.getAttribute("id"));
+            String nomeCliente = entregaElement.getElementsByTagName("nomeCliente").item(0).getTextContent();
+            String nomeEmpresa = entregaElement.getElementsByTagName("nomeEmpresa").item(0).getTextContent();
+            int idPedido = Integer.parseInt(entregaElement.getElementsByTagName("idPedido").item(0).getTextContent());
+            int idEntregador = Integer.parseInt(entregaElement.getElementsByTagName("idEntregador").item(0).getTextContent());
+            String destino = entregaElement.getElementsByTagName("destino").item(0).getTextContent();
+            String produtos = entregaElement.getElementsByTagName("produtos").item(0).getTextContent();
+
+            Entrega entrega = new Entrega(id, nomeCliente, nomeEmpresa, idPedido, idEntregador, destino, produtos);
+
+            // Adiciona no mapa de entregas
+            entregasPorID.put(id, entrega);
+        }
+    }
+}
+
 
 }
 

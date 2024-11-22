@@ -74,7 +74,7 @@ public class SistemaEmpresa {
         if(tipoEmpresa.matches("farmacia")){
             dados.empresasPorID.put(dados.contadorIdEmpresa, farmacia);
             dados.contadorIdEmpresa++;
-            dados.xml.inserirEmpresa(farmacia);
+           dados.xml.inserirEmpresa(farmacia);
         }
         else{
             throw new TipoEmpresaInvalidoException();
@@ -196,7 +196,7 @@ public class SistemaEmpresa {
         }
 
     }
-    public void alterarFuncionamento(int idEmpresa, String abre, String fecha) throws EmpresaNaoEncontradaException, FormatoHoraInvalidoException, HorarioInvalidoException, NaoMercadoValidoException {
+    public void alterarFuncionamento(int idEmpresa, String abre, String fecha) throws EmpresaNaoEncontradaException, FormatoHoraInvalidoException, HorarioInvalidoException, NaoMercadoValidoException, ErroApagarArquivoException {
         if(!dados.empresasPorID.containsKey(idEmpresa)){
             throw new EmpresaNaoEncontradaException();
         }
@@ -210,6 +210,7 @@ public class SistemaEmpresa {
         }
         empresa.setAbre(abre);
         empresa.setFecha(fecha);
+        dados.xml.editarEmpresa(empresa);
 
     }
 }

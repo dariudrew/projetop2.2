@@ -5,9 +5,11 @@ import br.ufal.ic.p2.jackut.modelo.exception.verificacao.ErroApagarArquivoExcept
 import br.ufal.ic.p2.jackut.modelo.pedido.Pedido;
 import br.ufal.ic.p2.jackut.modelo.produto.Produto;
 import br.ufal.ic.p2.jackut.modelo.usuario.DonoEmpresa;
+import br.ufal.ic.p2.jackut.modelo.usuario.Entregador;
 import br.ufal.ic.p2.jackut.modelo.usuario.Usuario;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,7 +26,7 @@ public class XML {
     private final String arquivoNome = "arquivo.xml";
 
 
-    private Document carregarOuCriarXML() {
+    public Document carregarOuCriarXML() {
         try {
             File arquivo = new File(arquivoNome);
 
@@ -32,7 +34,7 @@ public class XML {
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 
             if (arquivo.exists()) {
-                // Se o arquivo já existir, carrega o documento
+                // Se o arquivo jï¿½ existir, carrega o documento
                 return documentBuilder.parse(arquivo);
             } else {
                 Document document = documentBuilder.newDocument();
@@ -47,17 +49,17 @@ public class XML {
         return null;
     }
 
-    private void salvarXML(Document document) {
+    public void salvarXML(Document document) {
         try {
-            // Criação de um TransformerFactory e Transformer para escrever o XML no arquivo
+            // Criaï¿½ï¿½o de um TransformerFactory e Transformer para escrever o XML no arquivo
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
 
             //Configura o transformador para indentar o XML
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4"); // Indenta com 4 espaços
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4"); // Indenta com 4 espaï¿½os
 
-            //Define a codificação como UTF-8 para o arquivo
+            //Define a codificaï¿½ï¿½o como UTF-8 para o arquivo
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
             //Remove as quebras de linha extras
@@ -67,7 +69,7 @@ public class XML {
             DOMSource domSource = new DOMSource(document);
             StreamResult streamResult = new StreamResult(new File("arquivo.xml"));
 
-            // Aplica a transformação
+            // Aplica a transformaï¿½ï¿½o
             transformer.transform(domSource, streamResult);
 
 
@@ -77,17 +79,17 @@ public class XML {
     }
 
 
-    //cria o XML se não existir
+    //cria o XML se nï¿½o existir
     public void criarXML() {
         carregarOuCriarXML();
     }
 
     // metodo auxiliar para inserir elementos no XML
-    private void inserirElemento(Document document, Element elemento) {
+    public void inserirElemento(Document document, Element elemento) {
         try {
             Element raiz = document.getDocumentElement();
             raiz.appendChild(elemento); // Adiciona o elemento na raiz do mesmo documento
-            salvarXML(document); // Salva as alterações
+            salvarXML(document); // Salva as alteraï¿½ï¿½es
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +97,7 @@ public class XML {
 
 
     public void inserirUsuario(Usuario usuario) throws ErroApagarArquivoException {
-        Document document = carregarOuCriarXML(); // Carrega ou cria o documento existente
+        Document document = carregarOuCriarXML(); 
         Element usuarioElement = document.createElement("usuario");
         usuarioElement.setAttribute("id", String.valueOf(usuario.getId()));
 
@@ -108,12 +110,16 @@ public class XML {
         if (usuario.getTipoObjeto().equals("donoEmpresa")) {
             usuarioElement.appendChild(criarElemento(document, "cpf", ((DonoEmpresa) usuario).getCpf()));
         }
+        else if(usuario.getTipoObjeto().equals("entregador")){
+            usuarioElement.appendChild(criarElemento(document, "veiculo", ((Entregador) usuario).getVeiculo()));
+            usuarioElement.appendChild(criarElemento(document, "placa", ((Entregador) usuario).getPlaca()));
+        }
 
         inserirElemento(document, usuarioElement); // Agora passa o document correto ao inserir
     }
 
 
-    // Método para criar um elemento Empresa
+    // Mï¿½todo para criar um elemento Empresa
     public void inserirEmpresa(Empresa empresa) throws ErroApagarArquivoException {
         Document document = carregarOuCriarXML();
         Element empresaElement = document.createElement("empresa");
@@ -142,7 +148,7 @@ public class XML {
         inserirElemento(document, empresaElement);
     }
 
-     // Método para criar um elemento Produto
+     // Mï¿½todo para criar um elemento Produto
     public void inserirProduto(Produto produto) throws ErroApagarArquivoException {
         Document document = carregarOuCriarXML();
         Element produtoElement = document.createElement("produto");
@@ -156,7 +162,7 @@ public class XML {
         inserirElemento(document, produtoElement);
     }
 
-    // Método para criar um elemento Pedido
+    // Mï¿½todo para criar um elemento Pedido
     public void inserirPedido(Pedido pedido) throws ErroApagarArquivoException {
         Document document = carregarOuCriarXML();
         Element pedidoElement = document.createElement("pedido");
@@ -188,8 +194,8 @@ public class XML {
         inserirElemento(document, entregaElement);
     }
 
-    // Método auxiliar para criar um elemento com texto
-    private Element criarElemento(Document document, String tagName, String textContent) throws ErroApagarArquivoException {
+    // Mï¿½todo auxiliar para criar um elemento com texto
+    public Element criarElemento(Document document, String tagName, String textContent) throws ErroApagarArquivoException {
         Element element = document.createElement(tagName);
         element.appendChild(document.createTextNode(textContent));
         return element;
@@ -205,11 +211,128 @@ public class XML {
                     throw new ErroApagarArquivoException();
                 }
             } else {
-                System.out.println("Arquivo XML não existe.");
+                System.out.println("Arquivo XML nï¿½o existe.");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    public void atualizarProduto(Produto produto) throws ErroApagarArquivoException {
+        try {
+            // Carrega o documento XML
+            Document document = carregarOuCriarXML();
+    
+            // ObtÃ©m a lista de elementos "produto"
+            NodeList listaProdutos = document.getElementsByTagName("produto");
+    
+            // Percorre a lista de produtos para encontrar o produto com o ID correspondente
+            for (int i = 0; i < listaProdutos.getLength(); i++) {
+                Element elementoProduto = (Element) listaProdutos.item(i);
+    
+                // Verifica se o atributo "id" do produto corresponde ao ID do produto que serÃ¡ atualizado
+                if (elementoProduto.getAttribute("id").equals(String.valueOf(produto.getIdProduto()))) {
+                    // Atualiza os elementos do produto
+                    elementoProduto.getElementsByTagName("nome").item(0).setTextContent(produto.getNomeProduto());
+                    elementoProduto.getElementsByTagName("idEmpresa").item(0).setTextContent(String.valueOf(produto.getIdEmpresa()));
+                    elementoProduto.getElementsByTagName("preco").item(0).setTextContent(String.valueOf(produto.getValorProduto()));
+                    elementoProduto.getElementsByTagName("descricao").item(0).setTextContent(produto.getCategoria());
+    
+                    // Salva as alteraÃ§Ãµes no XML
+                    salvarXML(document);
+                    return; // Termina o mÃ©todo apÃ³s atualizar o produto
+                }
+            }
+    
+            // Caso o produto nÃ£o seja encontrado
+            throw new ErroApagarArquivoException("Produto com ID " + produto.getIdProduto() + " nÃ£o encontrado no XML.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ErroApagarArquivoException("Erro ao atualizar produto no XML: " + e.getMessage());
+        }
+    }
+    public void editarPedido(Pedido pedido) throws ErroApagarArquivoException {
+        try {
+            // Carrega o documento XML
+            Document document = carregarOuCriarXML();
+    
+            // ObtÃ©m a lista de elementos "pedido"
+            NodeList listaPedidos = document.getElementsByTagName("pedido");
+    
+            // Percorre a lista de pedidos para encontrar o pedido com o ID correspondente
+            for (int i = 0; i < listaPedidos.getLength(); i++) {
+                Element elementoPedido = (Element) listaPedidos.item(i);
+    
+                // Verifica se o atributo "id" do pedido corresponde ao ID do pedido que serÃ¡ atualizado
+                if (elementoPedido.getAttribute("id").equals(String.valueOf(pedido.getNumeroPedido()))) {
+                    // Atualiza os elementos do pedido
+                    elementoPedido.getElementsByTagName("idCliente").item(0).setTextContent(String.valueOf(pedido.getIdCliente()));
+                    elementoPedido.getElementsByTagName("idEmpresa").item(0).setTextContent(String.valueOf(pedido.getIdEmpresa()));
+                    elementoPedido.getElementsByTagName("nomeCliente").item(0).setTextContent(pedido.getNomeCliente());
+                    elementoPedido.getElementsByTagName("nomeEmpresa").item(0).setTextContent(pedido.getNomeEmpresa());
+                    elementoPedido.getElementsByTagName("estadoPedido").item(0).setTextContent(pedido.getEstadoPedido());
+                    elementoPedido.getElementsByTagName("produtos").item(0).setTextContent(pedido.getProdutos());
+                    elementoPedido.getElementsByTagName("valorPedido").item(0).setTextContent(String.valueOf(pedido.getValorPedido()));
+    
+                    // Salva as alteraÃ§Ãµes no XML
+                    salvarXML(document);
+                    return; // Termina o mÃ©todo apÃ³s atualizar o pedido
+                }
+            }
+    
+            // Caso o pedido nÃ£o seja encontrado
+            throw new ErroApagarArquivoException("Pedido com ID " + pedido.getNumeroPedido() + " nÃ£o encontrado no XML.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ErroApagarArquivoException("Erro ao atualizar pedido no XML: " + e.getMessage());
+        }
+    }
+    
+    public void editarEmpresa(Empresa empresa) throws ErroApagarArquivoException {
+        try {
+            // Carrega o documento XML
+            Document document = carregarOuCriarXML();
+    
+            // ObtÃ©m a lista de elementos "empresa"
+            NodeList listaEmpresas = document.getElementsByTagName("empresa");
+    
+            // Percorre a lista para localizar a empresa pelo ID
+            for (int i = 0; i < listaEmpresas.getLength(); i++) {
+                Element elementoEmpresa = (Element) listaEmpresas.item(i);
+    
+                // Verifica se o atributo "id" do elemento corresponde ao ID da empresa
+                if (elementoEmpresa.getAttribute("id").equals(String.valueOf(empresa.getIdEmpresa()))) {
+                    // Atualiza os elementos da empresa
+                    elementoEmpresa.getElementsByTagName("idDono").item(0).setTextContent(String.valueOf(empresa.getIdDono()));
+                    elementoEmpresa.getElementsByTagName("nome").item(0).setTextContent(empresa.getNomeEmpresa());
+                    elementoEmpresa.getElementsByTagName("endereco").item(0).setTextContent(empresa.getEnderecoEmpresa());
+                    elementoEmpresa.getElementsByTagName("entregadoresVinculados").item(0).setTextContent(empresa.getEntregadoresVinculados());
+    
+                    // Atualiza elementos especÃ­ficos com base no tipo de empresa
+                    if (empresa.getTipoEmpresa().equals("restaurante")) {
+                        elementoEmpresa.getElementsByTagName("tipoCozinha").item(0).setTextContent(empresa.getTipoCozinha());
+                    } else if (empresa.getTipoEmpresa().equals("mercado")) {
+                        elementoEmpresa.getElementsByTagName("abre").item(0).setTextContent(empresa.getAbre());
+                        elementoEmpresa.getElementsByTagName("fecha").item(0).setTextContent(empresa.getFecha());
+                        elementoEmpresa.getElementsByTagName("tipoMercado").item(0).setTextContent(empresa.getTipoMercado());
+                    } else if (empresa.getTipoEmpresa().equals("farmacia")) {
+                        elementoEmpresa.getElementsByTagName("aberto24Horas").item(0).setTextContent(String.valueOf(empresa.getAberto24Horas()));
+                        elementoEmpresa.getElementsByTagName("numeroFuncionarios").item(0).setTextContent(String.valueOf(empresa.getNumeroFuncionarios()));
+                    }
+    
+                    // Salva as alteraÃ§Ãµes no XML
+                    salvarXML(document);
+                    return; // Termina o mÃ©todo apÃ³s atualizar a empresa
+                }
+            }
+    
+            // Caso a empresa nÃ£o seja encontrada
+            throw new ErroApagarArquivoException("Empresa com ID " + empresa.getIdEmpresa() + " nÃ£o encontrada no XML.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ErroApagarArquivoException("Erro ao atualizar empresa no XML: " + e.getMessage());
+        }
+    }
+    
+    
 
 }

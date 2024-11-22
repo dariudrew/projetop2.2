@@ -35,7 +35,7 @@ public class SistemaProduto {
     }
 
     public void editarProduto(int idProduto, String nomeProduto, float valorProduto, String categoriaProduto)
-            throws NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoNaoCadastradoException {
+            throws NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ProdutoNaoCadastradoException, ErroApagarArquivoException {
 
         if(dados.validaNome(nomeProduto)){
             throw new NomeInvalidoException();
@@ -55,6 +55,7 @@ public class SistemaProduto {
         produto.setNomeProduto(nomeProduto);
         produto.setValorProduto(valorProduto);
         produto.setCategoriaProduto(categoriaProduto);
+        dados.xml.atualizarProduto(produto);
 
     }
     public String getProduto(String  nomeProduto, int idEmpresa, String atributo)
@@ -116,7 +117,7 @@ public class SistemaProduto {
                 }
                 if(produto.getIdEmpresa() == idEmpresa ){
 
-                    if(produtosPorEmpresa.matches(".*[a-zA-Z0-9]$")){       //veifica se a string terminar com letras, para saber quando add virgula e espaçamento entre as produtos.
+                    if(produtosPorEmpresa.matches(".*[a-zA-Z0-9]$")){       //veifica se a string terminar com letras, para saber quando add virgula e espaï¿½amento entre as produtos.
                         produtosPorEmpresa = produtosPorEmpresa.concat(", ");
                     }
                     produtosPorEmpresa = produtosPorEmpresa.concat(produto.getNomeProduto());

@@ -75,7 +75,7 @@ public class SistemaPedido {
     }
 
     public void adicionarProduto(int numeroPedido, int idProduto)
-            throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException {
+            throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException, ErroApagarArquivoException {
 
         if(!dados.pedidosPorID.containsKey(numeroPedido)){
             throw new NaoExistePedidoAbertoException();
@@ -93,7 +93,7 @@ public class SistemaPedido {
             String str = pedido.getProdutos();
             str = str.replaceAll("]}", "");
 
-            if(str.matches(".*[a-zA-Z0-9]$")){ // se há produtos
+            if(str.matches(".*[a-zA-Z0-9]$")){ // se hï¿½ produtos
                 str = str.concat(", "+produto.getNomeProduto()+"]}");
             }
             else{
@@ -102,6 +102,7 @@ public class SistemaPedido {
 
             pedido.setProdutos(str);
             pedido.setValorPedido(produto.getValorProduto());
+            dados.xml.editarPedido(pedido);
         }
         else{
             throw new ProdutoNaoPerteceEmpresaException();
@@ -128,18 +129,19 @@ public class SistemaPedido {
         };
     }
 
-    public void fecharPedido(int numeroPedido) throws PedidoNaoEncontradoException {
+    public void fecharPedido(int numeroPedido) throws PedidoNaoEncontradoException, ErroApagarArquivoException {
         if(!dados.pedidosPorID.containsKey(numeroPedido)){
             throw new PedidoNaoEncontradoException();
         }
         Pedido pedido = dados.pedidosPorID.get(numeroPedido);
         pedido.setEstadoPedido("preparando");
+        dados.xml.editarPedido(pedido);
     }
 
     public void removerProduto(int numeroPedido, String produto)
             throws ProdutoInvalidoException, PedidoNaoEncontradoException, ProdutoNaoEncontradoException,
             NaoPossivelRemoverProdutoException, EmpresaNaoCadastradaException, AtributoNaoExisteException,
-            NomeInvalidoException {
+            NomeInvalidoException, ErroApagarArquivoException {
 
         if (!dados.pedidosPorID.containsKey(numeroPedido)) {
             throw new PedidoNaoEncontradoException();
@@ -154,6 +156,7 @@ public class SistemaPedido {
         String valorProduto = sistemaProduto.getProduto(produto, pedido.getIdEmpresa(), "valor");
         float valorP = Float.parseFloat(valorProduto);
         pedido.setValorPedido(-valorP);
+        dados.xml.editarPedido(pedido);
     }
 
 
