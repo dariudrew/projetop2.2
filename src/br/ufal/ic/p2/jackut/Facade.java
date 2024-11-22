@@ -20,6 +20,7 @@ public class Facade {
     private SistemaEntrega sistemaEntrega;
     public Facade(){
         dados = new SistemaDados();
+        dados.carregarTodosDados();
         sistemaUsuario = new SistemaUsuario(dados);
         sistemaEmpresa = new SistemaEmpresa(dados);
         sistemaProduto = new SistemaProduto(dados);
@@ -52,7 +53,7 @@ public class Facade {
 
     }
     public void criarUsuario(String nome, String email, String senha, String endereco, String veiculo, String placa)
-            throws EmailJaExisteException, NomeInvalidoException, EmailInvalidoException, FormatoPlacaException, EnderecoInvalidoException, SenhaInvalidaException, NomeVeiculoInvalidoException, PlacaInvalidoException, AtributoNaoExisteException {
+            throws EmailJaExisteException, NomeInvalidoException, EmailInvalidoException, FormatoPlacaException, EnderecoInvalidoException, SenhaInvalidaException, NomeVeiculoInvalidoException, PlacaInvalidoException, AtributoNaoExisteException, ErroApagarArquivoException {
         sistemaUsuario.criarUsuario(nome, email, senha, endereco, veiculo, placa);
     }
     public int login(String email, String senha) throws LoginSenhaException, AtributoNaoExisteException {
@@ -84,11 +85,11 @@ public class Facade {
         return sistemaEmpresa.getAtributoEmpresa(empresa, atributo);
     }
 
-    public void alterarFuncionamento(int idEmpresa, String abre, String fecha) throws EmpresaNaoEncontradaException, HorarioInvalidoException, FormatoHoraInvalidoException, NaoMercadoValidoException {
+    public void alterarFuncionamento(int idEmpresa, String abre, String fecha) throws EmpresaNaoEncontradaException, HorarioInvalidoException, FormatoHoraInvalidoException, NaoMercadoValidoException, ErroApagarArquivoException {
        sistemaEmpresa.alterarFuncionamento(idEmpresa, abre, fecha);
     }
 
-    public void cadastrarEntregador(int empresa, int entregador) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, EmpresaNaoEncontradaException {
+    public void cadastrarEntregador(int empresa, int entregador) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, EmpresaNaoEncontradaException, ErroApagarArquivoException {
         sistemaUsuario.cadastrarEntregador(empresa, entregador);
     }
 
@@ -103,7 +104,7 @@ public class Facade {
         return sistemaProduto.criarProduto(idEmpresa, nomeProduto, valorProduto, categoriaProduto);
     }
 
-    public void editarProduto(int idProduto, String nomeProduto, float valorProduto, String categoriaProduto) throws ProdutoNaoCadastradoException, NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException {
+    public void editarProduto(int idProduto, String nomeProduto, float valorProduto, String categoriaProduto) throws ProdutoNaoCadastradoException, NomeInvalidoException, ProdutoValorInvalidoExcepion, ProdutoCategoriaInvalidaException, ErroApagarArquivoException {
         sistemaProduto.editarProduto(idProduto, nomeProduto,valorProduto, categoriaProduto);
     }
 
@@ -124,7 +125,7 @@ public class Facade {
         return sistemaPedido.getNumeroPedido(idCliente, idEmpresa, indice);
     }
 
-    public void adicionarProduto(int numeroPedido, int idProduto) throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException {
+    public void adicionarProduto(int numeroPedido, int idProduto) throws NaoExistePedidoAbertoException, ProdutoNaoEncontradoException, ProdutoNaoPerteceEmpresaException, PedidoFechadoException, ErroApagarArquivoException {
         sistemaPedido.adicionarProduto(numeroPedido, idProduto);
     }
 
@@ -133,18 +134,18 @@ public class Facade {
         return sistemaPedido.getPedidos(numeroPedido, atributo);
     }
 
-    public void fecharPedido(int numeroPedido) throws PedidoNaoEncontradoException {
+    public void fecharPedido(int numeroPedido) throws PedidoNaoEncontradoException, ErroApagarArquivoException {
         sistemaPedido.fecharPedido(numeroPedido);
     }
 
-    public void removerProduto(int numeroPedido, String produto) throws ProdutoInvalidoException, PedidoNaoEncontradoException, NaoPossivelRemoverProdutoException, ProdutoNaoEncontradoException, EmpresaNaoCadastradaException, AtributoNaoExisteException, NomeInvalidoException {
+    public void removerProduto(int numeroPedido, String produto) throws ProdutoInvalidoException, PedidoNaoEncontradoException, NaoPossivelRemoverProdutoException, ProdutoNaoEncontradoException, EmpresaNaoCadastradaException, AtributoNaoExisteException, NomeInvalidoException, ErroApagarArquivoException {
         sistemaPedido.removerProduto(numeroPedido, produto);
     }
     public int criarEntrega(int pedido, int idEntregador, String destino) throws UsuarioNaoCadastradoException, UsuarioNaoEntregadorException, PedidoNaoProntoException, EntregadorEmEntregaException, ErroApagarArquivoException {
         return sistemaEntrega.criarEntrega(pedido, idEntregador, destino);
     }
 
-    public void liberarPedido(int numero) throws PedidoNaoEncontradoException, NaoPossivelLiberarPedidoException, PedidoLiberadoException {
+    public void liberarPedido(int numero) throws PedidoNaoEncontradoException, NaoPossivelLiberarPedidoException, PedidoLiberadoException, ErroApagarArquivoException {
         sistemaEntrega.liberarPedido(numero);
     }
 
@@ -159,7 +160,7 @@ public class Facade {
         return sistemaEntrega.getIdEntrega(pedido);
     }
 
-    public void entregar(int idEntrega) throws NaoExisteNadaEntregaException {
+    public void entregar(int idEntrega) throws NaoExisteNadaEntregaException, ErroApagarArquivoException {
         sistemaEntrega.entregar(idEntrega);
     }
 
