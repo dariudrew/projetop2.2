@@ -4,4 +4,8 @@ public class ErroApagarArquivoException extends Exception{
     public ErroApagarArquivoException(){
         super("Erro ao tentar apagar arquivo");
     }
+
+    public ErroApagarArquivoException(String string) {
+        //
+    }
 }
