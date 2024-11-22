@@ -16,11 +16,11 @@ import java.util.Locale;
 
 public class SistemaProduto {
     private final SistemaDados dados;
-    private final SistemaUsuario sistemaUsuario;
+  
 
     public SistemaProduto(SistemaDados dados){
         this.dados = dados;
-        this.sistemaUsuario = new SistemaUsuario(dados);
+
     }
     public int criarProduto(int idEmpresa, String nomeProduto, float valorProduto, String categoriaProduto)
             throws EmpresaNaoCadastradaException, NomeInvalidoException,
